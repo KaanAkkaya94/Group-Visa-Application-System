@@ -125,7 +125,7 @@ class NotificationObserver {
   }
 }
 
-class UserProfileController {
+class UserProfile {
   constructor(userModel, subject) {
     this.User = userModel;
     this.subject = subject;
@@ -199,10 +199,7 @@ const userProfileSubject = new UserProfileSubject();
 userProfileSubject.subscribe(new LoggerObserver());
 userProfileSubject.subscribe(new AuditObserver());
 userProfileSubject.subscribe(new NotificationObserver());
-const userProfileController = new UserProfileController(
-  User,
-  userProfileSubject
-);
+const userProfile = new UserProfile(User, userProfileSubject);
 // const getProfile = async (req, res) => {
 //     try {
 
@@ -240,4 +237,4 @@ const userProfileController = new UserProfileController(
 //     }
 // };
 
-module.exports = { registerUser, LoginFactory, userProfileController };
+module.exports = { registerUser, LoginFactory, userProfile };

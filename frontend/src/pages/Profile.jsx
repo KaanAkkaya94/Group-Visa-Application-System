@@ -1,16 +1,15 @@
-import { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import axiosInstance from '../axiosConfig';
+import { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
+import axiosInstance from "../axiosConfig";
 
 const Profile = () => {
   const { user } = useAuth(); // Access user token from context
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    city: '',
-    postalcode: '',
-    address: '',
-    phone: '',
+    name: "",
+    email: "",
+    city: "",
+    address: "",
+    phone: "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -19,19 +18,19 @@ const Profile = () => {
     const fetchProfile = async () => {
       setLoading(true);
       try {
-        const response = await axiosInstance.get('/api/auth/profile', {
+        const response = await axiosInstance.get("/api/auth/profile", {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         setFormData({
           name: response.data.name,
           email: response.data.email,
-          city: response.data.city || '',
-          postalcode: response.data.postalcode || '',
-          address: response.data.address || '',
-          phone: response.data.phone || '',
+          city: response.data.city || "",
+          postalcode: response.data.postalcode || "",
+          address: response.data.address || "",
+          phone: response.data.phone || "",
         });
       } catch (error) {
-        alert('Failed to fetch profile. Please try again.');
+        alert("Failed to fetch profile. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -44,12 +43,12 @@ const Profile = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axiosInstance.put('/api/auth/profile', formData, {
+      await axiosInstance.put("/api/auth/profile", formData, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
-      alert('Profile updated successfully!');
+      alert("Profile updated successfully!");
     } catch (error) {
-      alert('Failed to update profile. Please try again.');
+      alert("Failed to update profile. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -84,18 +83,20 @@ const Profile = () => {
           onChange={(e) => setFormData({ ...formData, city: e.target.value })}
           className="w-full mb-4 p-2 border rounded"
         />
-        <input
+        {/* <input
           type="text"
           placeholder="Postal code"
           value={formData.postalcode}
           onChange={(e) => setFormData({ ...formData, postalcode: e.target.value })}
           className="w-full mb-4 p-2 border rounded"
-        />
+        /> */}
         <input
           type="text"
           placeholder="Address"
           value={formData.address}
-          onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, address: e.target.value })
+          }
           className="w-full mb-4 p-2 border rounded"
         />
         <input
@@ -105,8 +106,11 @@ const Profile = () => {
           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
           className="w-full mb-4 p-2 border rounded"
         />
-        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
-          {loading ? 'Updating...' : 'Update Profile'}
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white p-2 rounded"
+        >
+          {loading ? "Updating..." : "Update Profile"}
         </button>
       </form>
     </div>

@@ -21,9 +21,10 @@ class ApplicationController {
   //fetches all applications
   async getApplications(req, res) {
     try {
-      const applications = await service.getApplications({
-        userId: req.user.id,
-      });
+      const applications = await service.getApplications(req.user.id);
+      console.log("applications", applications);
+      if (!applications)
+        res.status(404).json({ message: "Application not found" });
       res.json(applications);
     } catch (error) {
       res.status(500).json({ message: error.message });

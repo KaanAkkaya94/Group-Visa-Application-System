@@ -5,29 +5,50 @@ const bcrypt = require("bcrypt");
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
-// singleton
-const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
-  const admin = 0;
-  try {
-    const userExists = await User.findOne({ email });
-    if (userExists)
-      return res.status(400).json({ message: "User already exists" });
+// Singleton for user registration
+class UserRegistrationManager {
+  static instance;
 
-    const user = await User.create({ name, email, password, admin });
-    res.status(201).json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      token: generateToken(user.id),
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  constructor() {
+    if (UserRegistrationManager.instance) {
+      return UserRegistrationManager.instance;
+    }
+    UserRegistrationManager.instance = this;
   }
-};
+
+  async registerUser(req, res) {
+    const { name, email, password, admin } = req.body;
+    const adminValue = admin === 1 || admin === "1" ? 1 : 0;
+    try {
+      const userExists = await User.findOne({ email });
+      if (userExists)
+        return res.status(400).json({ message: "User already exists" });
+
+      const user = await User.create({ name, email, password, admin: adminValue });
+      // Optionally, instantiate the correct class for logging
+      let userType;
+      if (user.admin === 1) {
+        userType = new Admin();
+      } else {
+        userType = new User1();
+      }
+      userType.toString();
+
+      res.status(201).json({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        admin: user.admin,
+        token: generateToken(user.id),
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+}
 
 class User1 {
-  cosntructor() {}
+  constructor() {}
   toString() {
     console.log("User permissions granted.");
   }
@@ -200,6 +221,9 @@ userProfileSubject.subscribe(new LoggerObserver());
 userProfileSubject.subscribe(new AuditObserver());
 userProfileSubject.subscribe(new NotificationObserver());
 const userProfile = new UserProfile(User, userProfileSubject);
+const userRegistrationManager = new UserRegistrationManager();
+
+
 // const getProfile = async (req, res) => {
 //     try {
 
@@ -237,4 +261,7 @@ const userProfile = new UserProfile(User, userProfileSubject);
 //     }
 // };
 
-module.exports = { registerUser, LoginFactory, userProfile };
+module.exports = { registerUser: userRegistrationManager.registerUser.bind(userRegistrationManager),
+  LoginFactory, 
+  userProfile 
+};

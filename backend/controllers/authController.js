@@ -17,17 +17,26 @@ class UserRegistrationManager {
   }
 
   async registerUser(req, res) {
-    const { name, email, password, admin } = req.body;
-    const adminValue = admin === 1 || admin === "1" ? 1 : 0;
+    const { name, email, password } = req.body;
+    // generally all users are users
+    let admin = false;
+
     try {
       const userExists = await User.findOne({ email });
       if (userExists)
         return res.status(400).json({ message: "User already exists" });
-
-      const user = await User.create({ name, email, password, admin: adminValue });
+      if (name === "admin" && email === "admin@gmail.com") {
+        admin = true;
+      }
+      const user = await User.create({
+        name,
+        email,
+        password,
+        admin: admin,
+      });
       // Optionally, instantiate the correct class for logging
       let userType;
-      if (user.admin === 1) {
+      if (user.admin === true) {
         userType = new Admin();
       } else {
         userType = new User1();
@@ -67,11 +76,11 @@ class LoginFactory {
     try {
       const user = await User.findOne({ email });
       if (user && (await bcrypt.compare(password, user.password))) {
-        if (user.admin === "0") {
+        if (user.admin === true) {
           var loggedAdmin = new Admin();
           loggedAdmin.toString();
         }
-        if (user.admin === "1") {
+        if (user.admin === false) {
           var loggedUser = new User1();
           loggedUser.toString();
         }
@@ -223,7 +232,6 @@ userProfileSubject.subscribe(new NotificationObserver());
 const userProfile = new UserProfile(User, userProfileSubject);
 const userRegistrationManager = new UserRegistrationManager();
 
-
 // const getProfile = async (req, res) => {
 //     try {
 
@@ -261,7 +269,10 @@ const userRegistrationManager = new UserRegistrationManager();
 //     }
 // };
 
-module.exports = { registerUser: userRegistrationManager.registerUser.bind(userRegistrationManager),
-  LoginFactory, 
-  userProfile 
+module.exports = {
+  registerUser: userRegistrationManager.registerUser.bind(
+    userRegistrationManager
+  ),
+  LoginFactory,
+  userProfile,
 };

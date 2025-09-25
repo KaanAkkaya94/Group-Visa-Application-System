@@ -4,6 +4,10 @@ class ApplicationService {
     this.repository = repository;
   }
 
+  async getAllApplications() {
+    return this.repository.findAll();
+  }
+
   async getApplication(id) {
     return this.repository.findById(id);
   }

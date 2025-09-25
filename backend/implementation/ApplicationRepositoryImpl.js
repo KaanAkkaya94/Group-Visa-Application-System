@@ -2,6 +2,9 @@ const IApplicationRespository = require("./IApplicationRepository");
 const Application = require("../models/Application");
 
 class ApplicationRespositoryImpl extends IApplicationRespository {
+  async findAll() {
+    return Application.find({});
+  }
   async findById(id) {
     return Application.findById(id);
   }

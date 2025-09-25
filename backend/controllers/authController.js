@@ -25,7 +25,7 @@ class UserRegistrationManager {
         return res.status(400).json({ message: "User already exists" });
 
       const user = await User.create({ name, email, password, admin: adminValue });
-      // Optionally, instantiate the correct class for logging
+
       let userType;
       if (user.admin === 1) {
         userType = new Admin();
@@ -261,7 +261,4 @@ const userRegistrationManager = new UserRegistrationManager();
 //     }
 // };
 
-module.exports = { registerUser: userRegistrationManager.registerUser.bind(userRegistrationManager),
-  LoginFactory, 
-  userProfile 
-};
+module.exports = { userRegistrationManager, LoginFactory, userProfile };

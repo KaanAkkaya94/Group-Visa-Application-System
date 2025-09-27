@@ -1,7 +1,7 @@
 body {
   background-color: #f5f6fa;
   margin: 0;
-  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  font-family: "Segoe UI", "Roboto", "Arial", sans-serif;
 }
 
 .App {
@@ -83,7 +83,7 @@ button,
   color: #222 !important;
   border: none;
   border-radius: 8px;
-  padding: 0.75rem 1.5rem;
+  padding: 0.3rem 1rem;
   font-size: 1rem;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
@@ -98,7 +98,9 @@ button:hover,
   color: #111 !important;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
   border: 1px solid #ccc;
   border-radius: 6px;
   padding: 0.5rem;
@@ -109,7 +111,9 @@ input, select, textarea {
   transition: border 0.2s;
 }
 
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
   border-color: #b0b0b0;
   outline: none;
 }
@@ -123,7 +127,9 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 2px 16px #0001;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: #222;
 }
 

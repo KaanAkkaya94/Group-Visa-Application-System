@@ -66,7 +66,7 @@ const ApplicationList = ({
               application.status !== "Rejected") && (
               <button
                 onClick={() => setEditingApplication(application)}
-                className="mr-2 bg-yellow-500 text-white px-4 py-2 rounded"
+                className="mr-2 bg-yellow-500 text-white rounded"
               >
                 Edit
               </button>
@@ -75,7 +75,7 @@ const ApplicationList = ({
               application.status !== "Rejected") && (
               <button
                 onClick={() => handleDelete(application._id)}
-                className="mr-2 bg-red-500 text-white px-4 py-2 rounded"
+                className="mr-2 bg-red-500 text-white rounded"
               >
                 Delete
               </button>

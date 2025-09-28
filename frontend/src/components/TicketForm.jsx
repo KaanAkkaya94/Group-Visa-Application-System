@@ -139,7 +139,7 @@ const TicketForm = ({
           onChange={(e) => setFormData({ ...formData, status: e.target.value })}
           className="w-full p-2 border rounded mb-4"
         >
-          <option value="">-- Choose status --</option>
+          <option value="">-- Choose Status --</option>
           {TICKET_STATUS.map((s, i) => (
             <option key={i} value={s}>
               {s}

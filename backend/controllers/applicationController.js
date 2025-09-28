@@ -39,6 +39,7 @@ class ApplicationController {
   //creates a new visa application
   async addApplication(req, res) {
     const {
+      userId,
       title,
       cost,
       firstname,
@@ -51,7 +52,7 @@ class ApplicationController {
     } = req.body;
     try {
       const application = await service.addApplication({
-        userId: req.user.id,
+        userId: req.user.admin ? userId : req.user.id,
         title,
         cost,
         firstname,

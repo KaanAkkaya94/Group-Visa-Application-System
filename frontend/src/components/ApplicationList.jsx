@@ -9,7 +9,6 @@ const ApplicationList = ({
   invoices = [],
 }) => {
   const { user } = useAuth();
-
   const handleDelete = async (applicationId) => {
     try {
       await axiosInstance.delete(`/api/applications/${applicationId}`, {
@@ -83,6 +82,7 @@ const ApplicationList = ({
             {invoices.some((inv) => inv.applicationId === application._id) ? (
               <Link
                 to={`/view-invoice/${application._id}`}
+                state={user.admin ? { userId: application.userId } : {}}
                 className="bg-green-600 text-white px-4 py-2 rounded"
                 style={{ textDecoration: "none", marginRight: "0.5rem" }}
               >
@@ -91,6 +91,7 @@ const ApplicationList = ({
             ) : (
               <Link
                 to={`/request-invoice/${application._id}`}
+                state={user.admin ? { userId: application.userId } : {}}
                 className="bg-purple-500 text-white px-4 py-2 rounded"
                 style={{ textDecoration: "none", marginRight: "0.5rem" }}
               >

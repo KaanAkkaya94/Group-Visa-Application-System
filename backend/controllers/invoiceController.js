@@ -3,7 +3,10 @@ const Application = require("../models/Application");
 
 const getinvoices = async (req, res) => {
   try {
-    const invoices = await Invoice.find({ userId: req.user.id });
+    let invoices = req.user.admin
+      ? await Invoice.find({})
+      : await Invoice.find({ userId: req.user.id });
+    // const invoices = await Invoice.find({ userId: req.user.id });
     res.json(invoices);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -12,10 +15,16 @@ const getinvoices = async (req, res) => {
 
 const getInvoiceByApplication = async (req, res) => {
   try {
-    const invoice = await Invoice.findOne({
-      applicationId: req.params.applicationId,
-      userId: req.user.id,
-    });
+    const { userId } = req.query;
+    const invoice = req.user.admin
+      ? await Invoice.findOne({
+          applicationId: req.params.applicationId,
+          userId: userId,
+        })
+      : await Invoice.findOne({
+          applicationId: req.params.applicationId,
+          userId: req.user.id,
+        });
     if (!invoice) return res.status(404).json({ message: "Invoice not found" });
     res.json(invoice);
   } catch (error) {
@@ -24,10 +33,10 @@ const getInvoiceByApplication = async (req, res) => {
 };
 
 const addinvoice = async (req, res) => {
-  const { applicationId, title, cost, method, details } = req.body;
+  const { userId, applicationId, title, cost, method, details } = req.body;
   try {
     const invoice = await Invoice.create({
-      userId: req.user.id,
+      userId: req.user.admin ? userId : req.user.id,
       applicationId,
       title,
       cost,
@@ -48,11 +57,15 @@ const addinvoice = async (req, res) => {
 };
 
 const updateinvoice = async (req, res) => {
-  const { title, cost, method, details } = req.body;
+  const { userId, title, cost, method, details } = req.body;
   try {
+    console.log("userId", userId);
     const invoice = await Invoice.findById(req.params.id);
     if (!invoice) return res.status(404).json({ message: "Invoice not found" });
-    if (invoice.userId.toString() !== req.user.id)
+    if (
+      (!req.user.admin && invoice.userId.toString() !== req.user.id) ||
+      (req.user.admin && invoice.userId.toString() !== userId)
+    )
       return res.status(403).json({ message: "Not authorized" });
 
     invoice.title = title || invoice.title;
@@ -68,9 +81,13 @@ const updateinvoice = async (req, res) => {
 
 const deleteinvoice = async (req, res) => {
   try {
+    const { userId } = req.query;
     const invoice = await Invoice.findById(req.params.id);
     if (!invoice) return res.status(404).json({ message: "Invoice not found" });
-    if (invoice.userId.toString() !== req.user.id)
+    if (
+      (!req.user.admin && invoice.userId.toString() !== req.user.id) ||
+      (req.user.admin && invoice.userId.toString() !== userId)
+    )
       return res.status(403).json({ message: "Not authorized" });
 
     await invoice.remove();

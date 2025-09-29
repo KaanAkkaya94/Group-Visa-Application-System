@@ -28,15 +28,12 @@ const TicketSystemPage = () => {
 
   return (
     <div className="container mx-auto p-6">
-      {(!user.admin || (user.admin && editingTicket)) && (
-        <TicketForm
-          tickets={tickets}
-          setTickets={setTickets}
-          editingTicket={editingTicket}
-          setEditingTicket={setEditingTicket}
-        />
-      )}
-
+      <TicketForm
+        tickets={tickets}
+        setTickets={setTickets}
+        editingTicket={editingTicket}
+        setEditingTicket={setEditingTicket}
+      />
       <TicketList
         tickets={tickets}
         setTickets={setTickets}

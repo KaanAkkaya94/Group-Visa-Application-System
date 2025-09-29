@@ -142,7 +142,7 @@ const ApplicationForm = ({
           ? "Update Visa application"
           : "Create new Visa application"}
       </h1>
-      {user.admin && (
+      {user.admin && !editingApplication && (
         <select
           value={formData.userId || ""}
           onChange={(e) => setFormData({ ...formData, userId: e.target.value })}

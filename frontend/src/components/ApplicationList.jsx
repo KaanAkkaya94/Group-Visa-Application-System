@@ -61,8 +61,8 @@ const ApplicationList = ({
             </span>
           </p>
           <div className="mt-2">
-            {(application.status !== "Approval" ||
-              application.status !== "Rejected") && (
+            {(application.status == "Pre-payment" ||
+              application.status == "Pending") && (
               <button
                 onClick={() => setEditingApplication(application)}
                 className="mr-2 bg-yellow-500 text-white rounded"
@@ -70,8 +70,8 @@ const ApplicationList = ({
                 Edit
               </button>
             )}
-            {(application.status !== "Approval" ||
-              application.status !== "Rejected") && (
+            {(application.status == "Pre-payment" ||
+              application.status == "Pending") && (
               <button
                 onClick={() => handleDelete(application._id)}
                 className="mr-2 bg-red-500 text-white rounded"
@@ -79,25 +79,27 @@ const ApplicationList = ({
                 Delete
               </button>
             )}
-            {invoices.some((inv) => inv.applicationId === application._id) ? (
-              <Link
-                to={`/view-invoice/${application._id}`}
-                state={user.admin ? { userId: application.userId } : {}}
-                className="bg-green-600 text-white px-4 py-2 rounded"
-                style={{ textDecoration: "none", marginRight: "0.5rem" }}
-              >
-                View Invoice
-              </Link>
-            ) : (
-              <Link
-                to={`/request-invoice/${application._id}`}
-                state={user.admin ? { userId: application.userId } : {}}
-                className="bg-purple-500 text-white px-4 py-2 rounded"
-                style={{ textDecoration: "none", marginRight: "0.5rem" }}
-              >
-                Request Invoice
-              </Link>
-            )}
+            {(application.status == "Pre-payment" ||
+              application.status == "Pending") &&
+              (invoices.some((inv) => inv.applicationId === application._id) ? (
+                <Link
+                  to={`/view-invoice/${application._id}`}
+                  state={user.admin ? { userId: application.userId } : {}}
+                  className="bg-green-600 text-white px-4 py-2 rounded"
+                  style={{ textDecoration: "none", marginRight: "0.5rem" }}
+                >
+                  View Invoice
+                </Link>
+              ) : (
+                <Link
+                  to={`/request-invoice/${application._id}`}
+                  state={user.admin ? { userId: application.userId } : {}}
+                  className="bg-purple-500 text-white px-4 py-2 rounded"
+                  style={{ textDecoration: "none", marginRight: "0.5rem" }}
+                >
+                  Request Invoice
+                </Link>
+              ))}
           </div>
         </div>
       ))}

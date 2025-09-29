@@ -1,6 +1,6 @@
 const Invoice = require('../models/Invoice');
 
-// Facade class for invoice operations
+// Facade design pattern class for invoice operations
 class InvoiceFacade {
   async getInvoices(userId) {
     return await Invoice.find({ userId });
@@ -46,7 +46,7 @@ class InvoiceFacade {
 
 const invoiceFacade = new InvoiceFacade();
 
-// Controller functions using the Facade
+// Controller functions using the Facade design pattern
 const getinvoices = async (req, res) => {
   try {
     const invoices = await invoiceFacade.getInvoices(req.user.id);

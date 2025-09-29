@@ -4,6 +4,10 @@ class ApplicationService {
     this.repository = repository;
   }
 
+  async getAllApplications() {
+    return this.repository.findAll();
+  }
+
   async getApplication(id) {
     return this.repository.findById(id);
   }
@@ -27,6 +31,7 @@ class ApplicationService {
       city,
       dateofarrival,
       dateofdeparture,
+      status,
     } = data;
     application.title = title || application.title;
     application.cost = cost || application.cost;
@@ -39,6 +44,7 @@ class ApplicationService {
     application.dateofarrival = dateofarrival || application.dateofarrival;
     application.dateofdeparture =
       dateofdeparture || application.dateofdeparture;
+    application.status = status || application.status;
     const updatedApplication = this.repository.update(application);
     return updatedApplication;
   }

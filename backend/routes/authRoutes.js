@@ -4,6 +4,7 @@ const {
   LoginFactory,
   userProfile,
   registerUser,
+  getAllUsers,
 } = require("../controllers/authController");
 const authMiddleware = require("../middleware/authMiddleware");
 const User = require("../models/User");
@@ -17,5 +18,7 @@ router.get("/profile", authMiddleware.protect, (req, res) =>
 router.put("/profile", authMiddleware.protect, (req, res) =>
   userProfile.updateUserProfile(req, res)
 );
+// for admin
+router.get("/", authMiddleware.protect, getAllUsers);
 
 module.exports = router;

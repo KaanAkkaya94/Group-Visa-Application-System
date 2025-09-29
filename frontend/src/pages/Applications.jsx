@@ -9,6 +9,7 @@ const Applications = () => {
   const [applications, setApplications] = useState([]);
   const [editingApplication, setEditingApplication] = useState(null);
   const [invoices, setInvoices] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -33,13 +34,26 @@ const Applications = () => {
       }
     };
 
+    const fetchAllUsers = async () => {
+      try {
+        const response = await axiosInstance.get("/api/auth", {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        setAllUsers(response.data);
+      } catch (error) {}
+    };
+
     fetchApplications();
     fetchInvoices();
+    if (user.admin) {
+      fetchAllUsers();
+    }
   }, [user]);
 
   return (
     <div className="container mx-auto p-6">
       <ApplicationForm
+        allUsers={allUsers}
         applications={applications}
         setApplications={setApplications}
         editingApplication={editingApplication}

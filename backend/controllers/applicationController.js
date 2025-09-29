@@ -21,8 +21,13 @@ class ApplicationController {
   //fetches all applications
   async getApplications(req, res) {
     try {
-      const applications = await service.getApplications(req.user.id);
-      console.log("applications", applications);
+      let applications;
+      const { admin } = req.user;
+      if (admin === true) {
+        applications = await service.getAllApplications();
+      } else {
+        applications = await service.getApplications(req.user.id);
+      }
       if (!applications)
         res.status(404).json({ message: "Application not found" });
       res.json(applications);
@@ -34,6 +39,7 @@ class ApplicationController {
   //creates a new visa application
   async addApplication(req, res) {
     const {
+      userId,
       title,
       cost,
       firstname,
@@ -46,7 +52,7 @@ class ApplicationController {
     } = req.body;
     try {
       const application = await service.addApplication({
-        userId: req.user.id,
+        userId: req.user.admin ? userId : req.user.id,
         title,
         cost,
         firstname,

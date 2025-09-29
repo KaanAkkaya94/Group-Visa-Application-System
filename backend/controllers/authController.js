@@ -11,9 +11,9 @@ const generateToken = (id) => {
 class UserFactory {
   static createUser({ name, email, password, admin }) {
     if (admin) {
-      return new Admin(name, email, password);
+      return new Admin(name, email, password, admin);
     } else {
-      return new User1(name, email, password);
+      return new User1(name, email, password, admin);
     }
   }
 }
@@ -39,14 +39,20 @@ class Admin {
 const registerUser = async (req, res) => {
   const { name, email, password, admin } = req.body;
   try {
+    let admin = false;
     const userExists = await User.findOne({ email });
+    if (name === "admin" && email === "admin@gmail.com") {
+      admin = true;
+    }
     if (userExists)
       return res.status(400).json({ message: "User already exists" });
-
+    
+    console.log("before create:");
 
     const userObj = UserFactory.createUser({ name, email, password, admin });
+    console.log("after create:", userObj);
     const user = await User.create(userObj);
-
+    console.log("Registered user:", user);
     res.status(201).json({
       id: user.id,
       name: user.name,

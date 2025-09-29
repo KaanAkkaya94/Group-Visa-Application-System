@@ -1,11 +1,13 @@
 const express = require("express");
 const {
-  registerUser,
+  userRegistrationManager,
   LoginFactory,
   userProfile,
+  registerUser,
   getAllUsers,
 } = require("../controllers/authController");
 const authMiddleware = require("../middleware/authMiddleware");
+const User = require("../models/User");
 const router = express.Router();
 
 router.post("/register", registerUser);

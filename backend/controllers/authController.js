@@ -10,7 +10,7 @@ const generateToken = (id) => {
 // Factory design pattern for user registration
 class UserFactory {
   static createUser({ name, email, password, admin }) {
-    if (admin === 1 || admin === "1") {
+    if (admin) {
       return new AdminUser(name, email, password);
     } else {
       return new RegularUser(name, email, password);
@@ -66,11 +66,11 @@ class LoginFactory {
     try {
       const user = await User.findOne({ email });
       if (user && (await bcrypt.compare(password, user.password))) {
-        if (user.admin === "0") {
+        if (user.admin === true) {
           var loggedAdmin = new Admin();
           loggedAdmin.toString();
         }
-        if (user.admin === "1") {
+        if (user.admin === false) {
           var loggedUser = new User1();
           loggedUser.toString();
         }
@@ -259,5 +259,20 @@ const userProfile = new UserProfile(User, userProfileSubject);
 //         res.status(500).json({ message: error.message });
 //     }
 // };
+// for admin to get all users
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({});
+    if (!users) return res.status(404).json({ message: "no users" });
+    return res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
-module.exports = { registerUser, LoginFactory, userProfile };
+module.exports = {
+  registerUser,
+  LoginFactory,
+  userProfile,
+  getAllUsers,
+};

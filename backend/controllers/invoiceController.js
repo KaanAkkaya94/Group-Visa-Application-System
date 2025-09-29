@@ -94,7 +94,10 @@ const getInvoiceByApplication = async (req, res) => {
   try {
     // For admin, userId can be passed in query
     req.user.userId = req.query.userId;
-    const invoice = await invoiceFacade.getInvoiceByApplication(req.params.applicationId, req.user);
+    const invoice = await invoiceFacade.getInvoiceByApplication(
+      req.params.applicationId,
+      req.user
+    );
     if (!invoice) return res.status(404).json({ message: "Invoice not found" });
     res.json(invoice);
   } catch (error) {
@@ -116,9 +119,15 @@ const addinvoice = async (req, res) => {
 
 const updateinvoice = async (req, res) => {
   try {
-    const result = await invoiceFacade.updateInvoice(req.params.id, req.body, req.user);
-    if (result === null) return res.status(404).json({ message: "Invoice not found" });
-    if (result === "unauthorized") return res.status(403).json({ message: "Not authorized" });
+    const result = await invoiceFacade.updateInvoice(
+      req.params.id,
+      req.body,
+      req.user
+    );
+    if (result === null)
+      return res.status(404).json({ message: "Invoice not found" });
+    if (result === "unauthorized")
+      return res.status(403).json({ message: "Not authorized" });
     res.json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -129,8 +138,10 @@ const deleteinvoice = async (req, res) => {
   try {
     req.user.userId = req.query.userId;
     const result = await invoiceFacade.deleteInvoice(req.params.id, req.user);
-    if (result === null) return res.status(404).json({ message: "Invoice not found" });
-    if (result === "unauthorized") return res.status(403).json({ message: "Not authorized" });
+    if (result === null)
+      return res.status(404).json({ message: "Invoice not found" });
+    if (result === "unauthorized")
+      return res.status(403).json({ message: "Not authorized" });
     res.json({ message: "Invoice deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });

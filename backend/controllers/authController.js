@@ -11,14 +11,14 @@ const generateToken = (id) => {
 class UserFactory {
   static createUser({ name, email, password, admin }) {
     if (admin) {
-      return new AdminUser(name, email, password);
+      return new Admin(name, email, password);
     } else {
-      return new RegularUser(name, email, password);
+      return new User1(name, email, password);
     }
   }
 }
 
-class RegularUser {
+class User1 {
   constructor(name, email, password) {
     this.name = name;
     this.email = email;
@@ -27,7 +27,7 @@ class RegularUser {
   }
 }
 
-class AdminUser {
+class Admin {
   constructor(name, email, password) {
     this.name = name;
     this.email = email;

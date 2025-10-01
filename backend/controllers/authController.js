@@ -266,19 +266,46 @@ const userProfile = new UserProfile(User, userProfileSubject);
 //     }
 // };
 // for admin to get all users
-const getAllUsers = async (req, res) => {
+// const getAllUsers = async (req, res) => {
+//   try {
+//     const users = await User.find({});
+//     if (!users) return res.status(404).json({ message: "no users" });
+//     return res.json(users);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
+
+class GetAllUsersCommand {
+  constructor(userModel) {
+    this.User = userModel;
+  }
+
+  async execute() {
+    const users = await this.User.find({});
+    if (!users) throw new Error("no users");
+    return users;
+
+  }
+  // Controller function uses the command
+  async getAllUsers (req, res){
+  const command = new GetAllUsersCommand(User);
   try {
-    const users = await User.find({});
-    if (!users) return res.status(404).json({ message: "no users" });
+    const users = await command.execute();
     return res.json(users);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(404).json({ message: error.message });
   }
 };
+}
+
+let getAllUsersCommand = new GetAllUsersCommand(User);
+
 
 module.exports = {
   registerUser,
   LoginFactory,
   userProfile,
-  getAllUsers,
+  getAllUsers: getAllUsersCommand.getAllUsers.bind(getAllUsersCommand),
 };

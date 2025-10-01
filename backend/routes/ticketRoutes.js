@@ -21,13 +21,6 @@ router
     ticketController.addTicket.bind(ticketController)
   );
 
-// Get invoice for a specific application
-router.get(
-  "/tickets/:ticketId",
-  authMiddleware.protect,
-  ticketController.getTicket.bind(ticketController)
-);
-
 router
   .route("/:id")
   .put(

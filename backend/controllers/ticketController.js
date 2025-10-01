@@ -9,15 +9,6 @@ class TicketController {
   constructor() {
     this.ticketService = new TicketService(new UserTicketFetchStrategy());
   }
-  async getTicket(req, res) {
-    try {
-      const ticket = await Ticket.findById(req.params.id);
-      if (!ticket) return res.status(404).json({ message: "ticket not found" });
-      res.json(ticket);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  }
 
   //fetches all tickets
   async getTickets(req, res) {

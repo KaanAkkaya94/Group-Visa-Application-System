@@ -1,27 +1,26 @@
 const express = require("express");
-// const { getApplications, getApplication, addapplication, updateapplication, deleteapplication } = require('../controllers/applicationController');
 const {
-  applicationController,
+  getApplications, getApplication, addApplication, updateApplication, deleteApplication
 } = require("../controllers/applicationController");
 const authMiddleware = require("../middleware/authMiddleware");
 const router = express.Router();
 
-router.get("/", authMiddleware.protect, applicationController.getApplications); // Fetch all applications
+router.get("/", authMiddleware.protect, getApplications);
 router.get(
   "/:id",
   authMiddleware.protect,
-  applicationController.getApplication
+  getApplication
 ); // Fetch a single application
-router.post("/", authMiddleware.protect, applicationController.addApplication); // Create new application
+router.post("/", authMiddleware.protect, addApplication);
 router.put(
   "/:id",
   authMiddleware.protect,
-  applicationController.updateApplication
+  updateApplication
 ); // Update application
 router.delete(
   "/:id",
   authMiddleware.protect,
-  applicationController.deleteApplication
+  deleteApplication
 ); // Delete application
 
 module.exports = router;

@@ -232,4 +232,12 @@ class ApplicationController {
 
 const applicationController = new ApplicationController();
 
-module.exports = { applicationController };
+// module.exports = { applicationController };
+
+module.exports = {
+  getApplications: applicationController.getApplications.bind(applicationController),
+  getApplication: applicationController.getApplication.bind(applicationController),
+  addApplication: applicationController.addApplication.bind(applicationController),
+  updateApplication: applicationController.updateApplication.bind(applicationController),
+  deleteApplication: applicationController.deleteApplication.bind(applicationController),
+};

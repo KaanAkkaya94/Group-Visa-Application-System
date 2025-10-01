@@ -1,6 +1,7 @@
 const IApplicationRespository = require("./IApplicationRepository");
 const Application = require("../models/Application");
-
+// inheritence
+// encapsulation
 class ApplicationRespositoryImpl extends IApplicationRespository {
   async findAll() {
     return Application.find({});

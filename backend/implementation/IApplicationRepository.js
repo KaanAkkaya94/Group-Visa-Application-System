@@ -1,7 +1,6 @@
 // interface
 class IAplicationRespository {
-  // for admin to get all applications
-  async findAll() {}
+  async findAll() {} // for admin to get all applications
   async findById(id) {}
   async findByUserId(userId) {}
   async create(data) {}

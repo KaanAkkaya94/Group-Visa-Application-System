@@ -2,9 +2,15 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
-};
+class TokenService {
+  static generateToken(id, expiresIn = "30d") {
+    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
+  }
+}
+
+// const generateToken = (id) => {
+//   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
+// };
 
 // Factory design pattern for user registration
 class UserFactory {
@@ -57,7 +63,7 @@ const registerUser = async (req, res) => {
       name: user.name,
       email: user.email,
       admin: user.admin,
-      token: generateToken(user.id),
+      token: TokenService.generateToken(user.id),
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -82,7 +88,7 @@ class LoginFactory {
           id: user.id,
           name: user.name,
           email: user.email,
-          token: generateToken(user.id),
+          token: TokenService.generateToken(user.id),
           admin: user.admin,
         });
       } else {
@@ -197,7 +203,7 @@ class UserProfile {
         city: updatedUser.city,
         address: updatedUser.address,
         phone: updatedUser.phone,
-        token: generateToken(updatedUser.id),
+        token: TokenService.generateToken(updatedUser.id),
       });
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -230,7 +236,7 @@ class UserProfile {
         city: updatedUser.city,
         address: updatedUser.address,
         phone: updatedUser.phone,
-        token: generateToken(updatedUser.id),
+        token: TokenService.generateToken(updatedUser.id),
       });
     } catch (error) {
       res.status(500).json({ message: error.message });

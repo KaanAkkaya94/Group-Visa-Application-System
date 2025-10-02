@@ -18,7 +18,7 @@ class TicketController {
         : new UserTicketFetchStrategy();
       this.ticketService.setStrategy(strategy);
       const tickets = await this.ticketService.getTickets(req.user);
-      if (!tickets || tickets.length === 0)
+      if (!tickets)
         return res.status(404).json({ message: "ticket not found" });
       res.json(tickets);
     } catch (error) {

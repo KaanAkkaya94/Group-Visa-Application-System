@@ -17,7 +17,7 @@ describe("invoiceController exports", function () {
   afterEach(() => sinon.restore());
 
   describe("getinvoices", function () {
-    it("T024 should return invoices for admin", async function () {
+    it("T039 should return invoices for admin", async function () {
       const req = { user: { admin: true, id: "adminid" } };
       const fakeInvoices = [{ title: "Invoice1" }];
       sinon.stub(Invoice, "find").resolves(fakeInvoices);
@@ -27,7 +27,7 @@ describe("invoiceController exports", function () {
       assert.isTrue(res.json.calledWith(fakeInvoices));
     });
 
-    it("T025 should return invoices for user", async function () {
+    it("T040 should return invoices for user", async function () {
       const req = { user: { admin: false, id: "userid" } };
       const fakeInvoices = [{ title: "Invoice2" }];
       sinon.stub(Invoice, "find").resolves(fakeInvoices);
@@ -37,7 +37,7 @@ describe("invoiceController exports", function () {
       assert.isTrue(res.json.calledWith(fakeInvoices));
     });
 
-    it("T026 should handle error (500)", async function () {
+    it("T041 should handle error (500)", async function () {
       sinon.stub(Invoice, "find").throws(new Error("DB Error"));
       const req = { user: { admin: false, id: "userid" } };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
@@ -49,7 +49,7 @@ describe("invoiceController exports", function () {
   });
 
   describe("getInvoiceByApplication", function () {
-    it("T027 should return invoice by applicationId for admin", async function () {
+    it("T042 should return invoice by applicationId for admin", async function () {
       const req = {
         params: { applicationId: "appid" },
         user: { admin: true, userId: "userid", id: "userid" },
@@ -63,7 +63,7 @@ describe("invoiceController exports", function () {
       assert.isTrue(res.json.calledWith(fakeInvoice));
     });
 
-    it("T028 should return 404 if invoice not found", async function () {
+    it("T043 should return 404 if invoice not found", async function () {
       const req = {
         params: { applicationId: "appid" },
         user: { admin: false, id: "userid" },
@@ -77,7 +77,7 @@ describe("invoiceController exports", function () {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("T029 should handle error (500)", async function () {
+    it("T044 should handle error (500)", async function () {
       const req = {
         params: { applicationId: "appid" },
         user: { admin: false, id: "userid" },
@@ -93,7 +93,7 @@ describe("invoiceController exports", function () {
   });
 
   describe("addinvoice", function () {
-    it("T030 should create a new invoice (201)", async function () {
+    it("T045 should create a new invoice (201)", async function () {
       const req = {
         body: {
           applicationId: "appid",
@@ -117,7 +117,7 @@ describe("invoiceController exports", function () {
       assert.isTrue(res.json.calledWith(fakeInvoice));
     });
 
-    it("T031 should return 404 if application not found", async function () {
+    it("T046 should return 404 if application not found", async function () {
       sinon.stub(Invoice, "create").resolves({});
       sinon.stub(Application, "findById").resolves(null);
       const req = {
@@ -138,7 +138,7 @@ describe("invoiceController exports", function () {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("T032 should handle error (500)", async function () {
+    it("T047 should handle error (500)", async function () {
       sinon.stub(Invoice, "create").throws(new Error("DB Error"));
       const req = {
         body: {
@@ -160,7 +160,7 @@ describe("invoiceController exports", function () {
   });
 
   describe("updateinvoice", function () {
-    it("T033 should update existing invoice", async function () {
+    it("T048 should update existing invoice", async function () {
       const req = {
         params: { id: "invoiceid" },
         body: { title: "Updated" },
@@ -179,7 +179,7 @@ describe("invoiceController exports", function () {
       assert.isTrue(res.json.calledWith(fakeInvoice));
     });
 
-    it("T034 should return 404 when missing", async function () {
+    it("T049 should return 404 when missing", async function () {
       sinon.stub(Invoice, "findById").resolves(null);
       const req = {
         params: { id: "invoiceid" },
@@ -193,7 +193,7 @@ describe("invoiceController exports", function () {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("T035 should reject unauthorized (403)", async function () {
+    it("T050 should reject unauthorized 403", async function () {
       const req = {
         params: { id: "invoiceid" },
         body: { userId: "otherid" },
@@ -211,7 +211,7 @@ describe("invoiceController exports", function () {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("T036 should handle error (500)", async function () {
+    it("T051 should handle error (500)", async function () {
       sinon.stub(Invoice, "findById").throws(new Error("DB Error"));
       const req = {
         params: { id: "invoiceid" },
@@ -227,7 +227,7 @@ describe("invoiceController exports", function () {
   });
 
   describe("deleteinvoice", function () {
-    it("T037 should delete invoice", async function () {
+    it("T052 should delete invoice", async function () {
       const req = {
         params: { id: "invoiceid" },
         user: { admin: false, id: "userid" },
@@ -242,7 +242,7 @@ describe("invoiceController exports", function () {
       assert.isTrue(res.json.calledWith({ message: "Invoice deleted" }));
     });
 
-    it("T038 should return 404 when missing", async function () {
+    it("T053 should return 404 when missing", async function () {
       sinon.stub(Invoice, "findById").resolves(null);
       const req = {
         params: { id: "invoiceid" },
@@ -256,7 +256,7 @@ describe("invoiceController exports", function () {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("T039 should reject unauthorized (403)", async function () {
+    it("T054 should reject unauthorized (403)", async function () {
       const req = {
         params: { id: "invoiceid" },
         user: { admin: false, id: "userid" },
@@ -274,7 +274,7 @@ describe("invoiceController exports", function () {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("T040 should handle error (500)", async function () {
+    it("T055 should handle error (500)", async function () {
       sinon.stub(Invoice, "findById").throws(new Error("DB Error"));
       const req = {
         params: { id: "invoiceid" },

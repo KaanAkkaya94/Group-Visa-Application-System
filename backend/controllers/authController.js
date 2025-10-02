@@ -24,37 +24,42 @@ class UserFactory {
 }
 
 class User1 {
-  constructor(name, email, password) {
+  constructor(name, email, password, admin) {
     this.name = name;
     this.email = email;
     this.password = password;
-    this.admin = false;
+    this.admin = admin;
   }
 }
 
 class Admin {
-  constructor(name, email, password) {
+  constructor(name, email, password, admin) {
     this.name = name;
     this.email = email;
     this.password = password;
-    this.admin = true;
+    this.admin = admin;
   }
 }
 
 const registerUser = async (req, res) => {
-  const { name, email, password, admin } = req.body;
+  const { name, email, password } = req.body;
   try {
-    let admin = false;
+    let isAdmin = false;
     const userExists = await User.findOne({ email });
     if (name === "admin" && email === "admin@gmail.com") {
-      admin = true;
+      isAdmin = true;
     }
     if (userExists)
       return res.status(400).json({ message: "User already exists" });
 
     console.log("before create:");
 
-    const userObj = UserFactory.createUser({ name, email, password, admin });
+    const userObj = UserFactory.createUser({
+      name,
+      email,
+      password,
+      admin: isAdmin,
+    });
     console.log("after create:", userObj);
     const user = await User.create(userObj);
     console.log("Registered user:", user);
@@ -196,7 +201,7 @@ class UserProfile {
         address: updatedUser.address,
         phone: updatedUser.phone,
       });
-      res.json({
+      res.status(200).json({
         id: updatedUser.id,
         name: updatedUser.name,
         email: updatedUser.email,
@@ -229,7 +234,7 @@ class UserProfile {
         address: updatedUser.address,
         phone: updatedUser.phone,
       });
-      res.json({
+      res.status(200).json({
         id: updatedUser.id,
         name: updatedUser.name,
         email: updatedUser.email,
@@ -257,7 +262,7 @@ class GetAllUsersCommand {
 
   async execute() {
     const users = await this.User.find({});
-    if (!users) throw new Error("no users");
+    if (!users || users.length === 0) throw new Error("NOT FOUND");
     return users;
   }
 
@@ -267,7 +272,10 @@ class GetAllUsersCommand {
       const users = await command.execute();
       return res.json(users);
     } catch (error) {
-      res.status(404).json({ message: error.message });
+      if (error.message === "NOT FOUND") {
+        return res.status(404).json({ message: "User not found" });
+      }
+      return res.status(500).json({ message: error.message });
     }
   }
 }
@@ -280,7 +288,7 @@ class DeleteUserComannd {
 
   async execute() {
     const user = await this.User.findById(this.userId);
-    if (!user) throw new Error("User not found");
+    if (!user) throw new Error("NOT FOUND");
 
     await user.remove();
     return { message: "User deleted" };
@@ -292,7 +300,10 @@ class DeleteUserComannd {
       const users = await command.execute();
       return res.json(users);
     } catch (error) {
-      res.status(404).json({ message: error.message });
+      if (error.message === "NOT FOUND") {
+        return res.status(404).json({ message: "User not found" });
+      }
+      res.status(500).json({ message: error.message });
     }
   }
 }

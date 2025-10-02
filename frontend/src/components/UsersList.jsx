@@ -29,13 +29,13 @@ const UsersList = ({ users, setUsers, setEditingUsers, editingUsers }) => {
               <Link
                 to="/profile"
                 state={{ selectedUser: user || {} }}
-                className="mr-2 bg-red-500 text-white  rounded"
+                className="btn-link mr-2 bg-red-500 text-white rounded"
               >
                 Edit
               </Link>
               <button
                 onClick={() => handleDelete(user._id)}
-                className="mr-2 bg-red-500 text-white  rounded"
+                className="mr-2 bg-red-500 text-white rounded"
               >
                 Delete
               </button>

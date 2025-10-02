@@ -11,7 +11,7 @@ describe("ticketController instance methods", function () {
   afterEach(() => sinon.restore());
 
   describe("getTickets", function () {
-    it("T041 should return tickets for admin", async function () {
+    it("T056 should return tickets for admin", async function () {
       const req = { user: { admin: true, id: "adminid" } };
       const fakeTickets = [{ subject: "Admin Ticket" }];
       const serviceStub = sinon
@@ -25,9 +25,9 @@ describe("ticketController instance methods", function () {
       assert.isTrue(serviceStub.calledOnce);
     });
 
-    it("T042 should return 404 if no tickets", async function () {
+    it("T057 should return 404 if tickets returns null", async function () {
       const req = { user: { admin: false, id: "userid" } };
-      sinon.stub(ticketController.ticketService, "getTickets").resolves([]);
+      sinon.stub(ticketController.ticketService, "getTickets").resolves(null);
       sinon.stub(ticketController.ticketService, "setStrategy");
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
@@ -36,7 +36,7 @@ describe("ticketController instance methods", function () {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("T043 should handle error (500)", async function () {
+    it("T058 should handle error (500)", async function () {
       const req = { user: { admin: false, id: "userid" } };
       sinon
         .stub(ticketController.ticketService, "getTickets")
@@ -51,7 +51,7 @@ describe("ticketController instance methods", function () {
   });
 
   describe("addTicket", function () {
-    it("T044 should create a new ticket (201)", async function () {
+    it("T059 should create a new ticket (201)", async function () {
       const req = {
         user: { id: "userid" },
         body: {
@@ -73,7 +73,7 @@ describe("ticketController instance methods", function () {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("T045 should handle error (500)", async function () {
+    it("T060 should handle error (500)", async function () {
       const sortStub = sinon.stub().resolves(null);
       sinon.stub(TicketNo, "findOne").returns({ sort: sortStub });
       sinon.stub(TicketNo.prototype, "save").resolves();
@@ -97,7 +97,7 @@ describe("ticketController instance methods", function () {
   });
 
   describe("updateTicket", function () {
-    it("T046 should update existing ticket", async function () {
+    it("T061 should update existing ticket", async function () {
       const req = {
         params: { id: "tid" },
         body: {
@@ -117,7 +117,7 @@ describe("ticketController instance methods", function () {
       assert.isTrue(res.json.calledWith(fakeTicket));
     });
 
-    it("T047 should return 404 for missing ticket", async function () {
+    it("T062 should return 404 for missing ticket", async function () {
       sinon.stub(Ticket, "findById").resolves(null);
       const req = { params: { id: "tid" }, body: {} };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
@@ -127,7 +127,7 @@ describe("ticketController instance methods", function () {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("T048 should handle error (500)", async function () {
+    it("T063 should handle error (500)", async function () {
       sinon.stub(Ticket, "findById").throws(new Error("DB Error"));
       const req = { params: { id: "tid" }, body: {} };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
@@ -139,7 +139,7 @@ describe("ticketController instance methods", function () {
   });
 
   describe("deleteTicket", function () {
-    it("T049 should delete existing ticket", async function () {
+    it("T064 should delete existing ticket", async function () {
       const req = { params: { id: "tid" } };
       const fakeTicket = { remove: sinon.stub().resolves() };
       sinon.stub(Ticket, "findById").resolves(fakeTicket);
@@ -150,7 +150,7 @@ describe("ticketController instance methods", function () {
       assert.isTrue(res.json.calledWith({ message: "ticket deleted" }));
     });
 
-    it("T050 should return 404 when missing", async function () {
+    it("T065 should return 404 when missing", async function () {
       sinon.stub(Ticket, "findById").resolves(null);
       const req = { params: { id: "tid" } };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
@@ -160,7 +160,7 @@ describe("ticketController instance methods", function () {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("T051 should handle error (500)", async function () {
+    it("T066 should handle error (500)", async function () {
       sinon.stub(Ticket, "findById").throws(new Error("DB Error"));
       const req = { params: { id: "tid" } };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };

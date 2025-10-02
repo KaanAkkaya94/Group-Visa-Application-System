@@ -142,6 +142,10 @@ h3 {
   text-shadow: 0 2px 8px #000;
 }
 
+.btn-link {
+  padding: 0.5rem 1rem;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

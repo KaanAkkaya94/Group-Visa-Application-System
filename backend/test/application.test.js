@@ -29,7 +29,16 @@ describe("applicationController exports", function () {
       assert.isTrue(res.json.calledWith(fakeApps));
     });
 
-    it("T002 should return applications for user", async function () {
+    it("T002 should return empty array for admin when no applications", async function () {
+      const req = { user: { admin: true, id: "adminid" } };
+      sinon.stub(service, "getAllApplications").resolves([]);
+      const res = { json: sinon.spy(), status: sinon.stub().returnsThis() };
+
+      await getApplications(req, res);
+      assert.isTrue(res.json.calledWith([]));
+    });
+
+    it("T003 should return applications for user", async function () {
       const req = { user: { admin: false, id: "userid" } };
       const fakeApps = [{ title: "Visa" }];
       sinon.stub(service, "getApplications").resolves(fakeApps);
@@ -39,7 +48,7 @@ describe("applicationController exports", function () {
       assert.isTrue(res.json.calledWith(fakeApps));
     });
 
-    it("T003 should return 404 if no applications found", async function () {
+    it("T004 should return 404 if no applications found", async function () {
       const req = { user: { admin: true, id: "adminid" } };
       sinon.stub(service, "getAllApplications").resolves(null);
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
@@ -49,7 +58,7 @@ describe("applicationController exports", function () {
       assert.isTrue(res.json.calledWith({ message: "Application not found" }));
     });
 
-    it("T004 should handle error (500)", async function () {
+    it("T005 should handle error (500)", async function () {
       sinon.stub(service, "getApplications").throws(new Error("DB Error"));
       const req = { user: { admin: false, id: "userid" } };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
@@ -61,7 +70,7 @@ describe("applicationController exports", function () {
   });
 
   describe("getApplication", function () {
-    it("T005 should return application by id", async function () {
+    it("T006 should return application by id", async function () {
       const req = { params: { id: "appid" } };
       const fakeApp = { title: "Visa" };
       sinon.stub(service, "getApplication").resolves(fakeApp);
@@ -71,7 +80,7 @@ describe("applicationController exports", function () {
       assert.isTrue(res.json.calledWith(fakeApp));
     });
 
-    it("T006 should return 404 if not found", async function () {
+    it("T007 should return 404 if not found", async function () {
       sinon.stub(service, "getApplication").resolves(null);
       const req = { params: { id: "appid" } };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
@@ -81,7 +90,7 @@ describe("applicationController exports", function () {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("T007 should handle error (500)", async function () {
+    it("T008 should handle error (500)", async function () {
       sinon.stub(service, "getApplication").throws(new Error("DB Error"));
       const req = { params: { id: "appid" } };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
@@ -93,7 +102,7 @@ describe("applicationController exports", function () {
   });
 
   describe("addApplication", function () {
-    it("T008 should create a new application (201)", async function () {
+    it("T009 should create a new application (201)", async function () {
       const req = {
         user: { admin: false, id: "userid" },
         body: { title: "Visa" },
@@ -107,7 +116,21 @@ describe("applicationController exports", function () {
       assert.isTrue(res.json.calledWith(fakeApp));
     });
 
-    it("T009 should handle error (500)", async function () {
+    it("T010 should create a new application (201)", async function () {
+      const req = {
+        user: { admin: true, id: "adminid" },
+        body: { userId: "otherid", title: "Visa" },
+      };
+      const fakeApp = { title: "Visa", userId: "otherid" };
+      sinon.stub(service, "addApplication").resolves(fakeApp);
+      const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
+
+      await addApplication(req, res);
+      assert.isTrue(res.status.calledWith(201));
+      assert.isTrue(res.json.calledWith(fakeApp));
+    });
+
+    it("T011 should handle error (500)", async function () {
       sinon.stub(service, "addApplication").throws(new Error("DB Error"));
       const req = {
         user: { admin: false, id: "userid" },
@@ -122,7 +145,7 @@ describe("applicationController exports", function () {
   });
 
   describe("updateApplication", function () {
-    it("T010 should update existing application", async function () {
+    it("T012 should update existing application", async function () {
       const req = { params: { id: "appid" }, body: { title: "Updated" } };
       const fakeApp = { title: "Visa" };
       const updatedApp = { title: "Updated" };
@@ -134,7 +157,7 @@ describe("applicationController exports", function () {
       assert.isTrue(res.json.calledWith(updatedApp));
     });
 
-    it("T011 should return 404 for missing application", async function () {
+    it("T013 should return 404 for missing application", async function () {
       sinon.stub(service, "getApplication").resolves(null);
       const req = { params: { id: "appid" }, body: { title: "Updated" } };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
@@ -144,7 +167,7 @@ describe("applicationController exports", function () {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("T012 should handle error (500)", async function () {
+    it("T014 should handle error (500)", async function () {
       sinon.stub(service, "getApplication").throws(new Error("DB Error"));
       const req = { params: { id: "appid" }, body: { title: "Updated" } };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
@@ -156,7 +179,7 @@ describe("applicationController exports", function () {
   });
 
   describe("deleteApplication", function () {
-    it("T013 should delete existing application", async function () {
+    it("T015 should delete existing application", async function () {
       const req = { params: { id: "appid" } };
       const fakeApp = { title: "Visa" };
       sinon.stub(service, "getApplication").resolves(fakeApp);
@@ -167,7 +190,7 @@ describe("applicationController exports", function () {
       assert.isTrue(res.json.calledWith({ message: "application deleted" }));
     });
 
-    it("T014 should return 404 when missing", async function () {
+    it("T016 should return 404 when missing", async function () {
       sinon.stub(service, "getApplication").resolves(null);
       const req = { params: { id: "appid" } };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
@@ -177,7 +200,7 @@ describe("applicationController exports", function () {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("T015 should handle error (500)", async function () {
+    it("T017 should handle error (500)", async function () {
       sinon.stub(service, "getApplication").throws(new Error("DB Error"));
       const req = { params: { id: "appid" } };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };

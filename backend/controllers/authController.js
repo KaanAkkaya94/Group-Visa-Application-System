@@ -8,11 +8,16 @@ class TokenService {
   }
 }
 
-// const generateToken = (id) => {
-//   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
-// };
+// Factory design pattern for user registration and login
 
-// Factory design pattern for user registration
+class UserBase {
+  constructor(name, email, password, admin = false) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.admin = admin;
+  }
+}
 class UserFactory {
   static createUser({ name, email, password, admin }) {
     if (admin) {
@@ -23,57 +28,53 @@ class UserFactory {
   }
 }
 
-class User1 {
+class User1 extends UserBase {
   constructor(name, email, password, admin) {
-    this.name = name;
-    this.email = email;
-    this.password = password;
-    this.admin = admin;
+    super(name, email, password, admin);
   }
 }
 
-class Admin {
+class Admin extends UserBase {
   constructor(name, email, password, admin) {
-    this.name = name;
-    this.email = email;
-    this.password = password;
-    this.admin = admin;
+    super(name, email, password, admin);
   }
 }
 
-const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
-  try {
-    let isAdmin = false;
-    const userExists = await User.findOne({ email });
-    if (name === "admin" && email === "admin@gmail.com") {
-      isAdmin = true;
+class Register {
+  static async registerUser(req, res) {
+    const { name, email, password } = req.body;
+    try {
+      let isAdmin = false;
+      const userExists = await User.findOne({ email });
+      if (name === "admin" && email === "admin@gmail.com") {
+        isAdmin = true;
+      }
+      if (userExists)
+        return res.status(400).json({ message: "User already exists" });
+
+      console.log("before create:");
+
+      const userObj = UserFactory.createUser({
+        name,
+        email,
+        password,
+        admin: isAdmin,
+      });
+      console.log("after create:", userObj);
+      const user = await User.create(userObj);
+      console.log("Registered user:", user);
+      res.status(201).json({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        admin: user.admin,
+        token: TokenService.generateToken(user.id),
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
-    if (userExists)
-      return res.status(400).json({ message: "User already exists" });
-
-    console.log("before create:");
-
-    const userObj = UserFactory.createUser({
-      name,
-      email,
-      password,
-      admin: isAdmin,
-    });
-    console.log("after create:", userObj);
-    const user = await User.create(userObj);
-    console.log("Registered user:", user);
-    res.status(201).json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      admin: user.admin,
-      token: TokenService.generateToken(user.id),
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
   }
-};
+}
 
 class LoginFactory {
   static async getUser(req, res) {
@@ -310,6 +311,7 @@ class DeleteUserComannd {
 
 let getAllUsersCommand = new GetAllUsersCommand(User);
 let deleteUserCommand = new DeleteUserComannd(User);
+const { registerUser } = Register;
 
 module.exports = {
   registerUser,

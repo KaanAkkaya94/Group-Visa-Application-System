@@ -1,6 +1,5 @@
 const express = require("express");
 const {
-  userRegistrationManager,
   LoginFactory,
   userProfile,
   registerUser,

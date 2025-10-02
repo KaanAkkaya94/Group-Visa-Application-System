@@ -29,6 +29,7 @@ const ApplicationForm = ({
     countryofresidence: "",
     email: "",
     city: "",
+    passportNo: "",
     dateofarrival: "",
     dateofdeparture: "",
     status: "Pre-payment",
@@ -52,6 +53,7 @@ const ApplicationForm = ({
         countryofresidence: editingApplication.countryofresidence || "",
         email: editingApplication.email || "",
         city: editingApplication.city || "",
+        passportNo: editingApplication.passportNo || "",
         dateofarrival: formatDate(editingApplication.dateofarrival),
         dateofdeparture: formatDate(editingApplication.dateofdeparture),
         status: editingApplication.status || "Pre-payment",
@@ -66,6 +68,7 @@ const ApplicationForm = ({
         countryofresidence: "",
         email: "",
         city: "",
+        passportNo: "",
         dateofarrival: "",
         dateofdeparture: "",
         status: "Pre-payment",
@@ -119,6 +122,7 @@ const ApplicationForm = ({
         countryofresidence: "",
         email: "",
         city: "",
+        passportNo: "",
         dateofarrival: "",
         dateofdeparture: "",
         status: "Pre-payment",
@@ -212,6 +216,15 @@ const ApplicationForm = ({
         placeholder="City"
         value={formData.city}
         onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+        className="w-full mb-4 p-2 border rounded"
+      />
+      <input
+        type="text"
+        placeholder="Passport Number"
+        value={formData.passportNo}
+        onChange={(e) =>
+          setFormData({ ...formData, passportNo: e.target.value })
+        }
         className="w-full mb-4 p-2 border rounded"
       />
       <label className="block mb-1 font-semibold">Date of Arrival</label>

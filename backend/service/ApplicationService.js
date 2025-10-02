@@ -29,6 +29,7 @@ class ApplicationService {
       countryofresidence,
       email,
       city,
+      passportNo,
       dateofarrival,
       dateofdeparture,
       status,
@@ -45,6 +46,7 @@ class ApplicationService {
     application.dateofdeparture =
       dateofdeparture || application.dateofdeparture;
     application.status = status || application.status;
+    application.passportNo = passportNo || application.passportNo;
     const updatedApplication = this.repository.update(application);
     return updatedApplication;
   }

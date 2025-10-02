@@ -6,7 +6,6 @@ const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
 
-
 // Factory design pattern for user registration
 class UserFactory {
   static createUser({ name, email, password, admin }) {
@@ -46,7 +45,7 @@ const registerUser = async (req, res) => {
     }
     if (userExists)
       return res.status(400).json({ message: "User already exists" });
-    
+
     console.log("before create:");
 
     const userObj = UserFactory.createUser({ name, email, password, admin });
@@ -64,7 +63,6 @@ const registerUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 class LoginFactory {
   static async getUser(req, res) {
@@ -96,20 +94,6 @@ class LoginFactory {
     return null;
   }
 }
-
-// const loginUser = async (req, res) => {
-//     const { email, password } = req.body;
-//     try {
-//         const user = await User.findOne({ email });
-//         if (user && (await bcrypt.compare(password, user.password))) {
-//             res.json({ id: user.id, name: user.name, email: user.email, token: generateToken(user.id), admin: user.admin });
-//         } else {
-//             res.status(401).json({ message: 'Invalid email or password' });
-//         }
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// };
 
 // observer
 class UserProfileSubject {
@@ -227,56 +211,6 @@ userProfileSubject.subscribe(new AuditObserver());
 userProfileSubject.subscribe(new NotificationObserver());
 const userProfile = new UserProfile(User, userProfileSubject);
 
-
-
-// const getProfile = async (req, res) => {
-//     try {
-
-//       const user = await User.findById(req.user.id);
-
-//       if (!user) {
-//         return res.status(404).json({ message: 'User not found' });
-//       }
-//       res.status(200).json({
-//         name: user.name,
-//         email: user.email,
-//         city: user.city,
-//         address: user.address,
-//       });
-//     } catch (error) {
-//       res.status(500).json({ message: 'Server error', error: error.message });
-//     }
-//   };
-
-// const updateUserProfile = async (req, res) => {
-//     try {
-//         const user = await User.findById(req.user.id);
-//         if (!user) return res.status(404).json({ message: 'User not found' });
-
-//         const { name, email, city, address } = req.body;
-//         user.name = name || user.name;
-//         user.email = email || user.email;
-//         user.city = city || user.city;
-//         user.address = address || user.address;
-
-//         const updatedUser = await user.save();
-//         res.json({ id: updatedUser.id, name: updatedUser.name, email: updatedUser.email, city: updatedUser.city, address: updatedUser.address, token: generateToken(updatedUser.id) });
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// };
-// for admin to get all users
-// const getAllUsers = async (req, res) => {
-//   try {
-//     const users = await User.find({});
-//     if (!users) return res.status(404).json({ message: "no users" });
-//     return res.json(users);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
-
 class GetAllUsersCommand {
   constructor(userModel) {
     this.User = userModel;
@@ -286,22 +220,20 @@ class GetAllUsersCommand {
     const users = await this.User.find({});
     if (!users) throw new Error("no users");
     return users;
-
   }
   // Controller function uses the command
-  async getAllUsers (req, res){
-  const command = new GetAllUsersCommand(User);
-  try {
-    const users = await command.execute();
-    return res.json(users);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
+  async getAllUsers(req, res) {
+    const command = new GetAllUsersCommand(User);
+    try {
+      const users = await command.execute();
+      return res.json(users);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+    }
   }
-};
 }
 
 let getAllUsersCommand = new GetAllUsersCommand(User);
-
 
 module.exports = {
   registerUser,

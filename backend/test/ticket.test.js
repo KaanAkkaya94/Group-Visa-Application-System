@@ -1,21 +1,23 @@
-import { createRequire } from 'module';
+import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
-const assert = require('chai').assert;
-const sinon = require('sinon');
-const Ticket = require('../models/Ticket');
-const TicketNo = require('../models/TicketNo');
-const ticketController = require('../controllers/ticketController');
+const assert = require("chai").assert;
+const sinon = require("sinon");
+const Ticket = require("../models/Ticket");
+const TicketNo = require("../models/TicketNo");
+const ticketController = require("../controllers/ticketController");
 
-describe("ticketController instance methods", function() {
+describe("ticketController instance methods", function () {
   afterEach(() => sinon.restore());
 
-  describe("getTickets", function() {
-    it("should return tickets for admin", async function() {
-      const req = { user: { admin: true, id: 'adminid' } };
-      const fakeTickets = [{ subject: 'Admin Ticket' }];
-      const serviceStub = sinon.stub(ticketController.ticketService, 'getTickets').resolves(fakeTickets);
-      sinon.stub(ticketController.ticketService, 'setStrategy');
+  describe("getTickets", function () {
+    it("T041 should return tickets for admin", async function () {
+      const req = { user: { admin: true, id: "adminid" } };
+      const fakeTickets = [{ subject: "Admin Ticket" }];
+      const serviceStub = sinon
+        .stub(ticketController.ticketService, "getTickets")
+        .resolves(fakeTickets);
+      sinon.stub(ticketController.ticketService, "setStrategy");
       const res = { json: sinon.spy(), status: sinon.stub().returnsThis() };
 
       await ticketController.getTickets(req, res);
@@ -23,10 +25,10 @@ describe("ticketController instance methods", function() {
       assert.isTrue(serviceStub.calledOnce);
     });
 
-    it("should return 404 if no tickets", async function() {
-      const req = { user: { admin: false, id: 'userid' } };
-      sinon.stub(ticketController.ticketService, 'getTickets').resolves([]);
-      sinon.stub(ticketController.ticketService, 'setStrategy');
+    it("T042 should return 404 if no tickets", async function () {
+      const req = { user: { admin: false, id: "userid" } };
+      sinon.stub(ticketController.ticketService, "getTickets").resolves([]);
+      sinon.stub(ticketController.ticketService, "setStrategy");
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
       await ticketController.getTickets(req, res);
@@ -34,10 +36,12 @@ describe("ticketController instance methods", function() {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("should handle error (500)", async function() {
-      const req = { user: { admin: false, id: 'userid' } };
-      sinon.stub(ticketController.ticketService, 'getTickets').throws(new Error('DB Error'));
-      sinon.stub(ticketController.ticketService, 'setStrategy');
+    it("T043 should handle error (500)", async function () {
+      const req = { user: { admin: false, id: "userid" } };
+      sinon
+        .stub(ticketController.ticketService, "getTickets")
+        .throws(new Error("DB Error"));
+      sinon.stub(ticketController.ticketService, "setStrategy");
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
       await ticketController.getTickets(req, res);
@@ -46,39 +50,66 @@ describe("ticketController instance methods", function() {
     });
   });
 
-    describe("addTicket", function() {
-    it("should create a new ticket (201)", async function() {
-        const req = { user: { id: 'userid' }, body: { username: 'user', subject: 'sub', email: 'e', message: 'm', createdAt: new Date() } };
-        const sortStub = sinon.stub().resolves({ ticketNo: 'T00001' });
-        sinon.stub(TicketNo, 'findOne').returns({ sort: sortStub });
-        sinon.stub(TicketNo.prototype, 'save').resolves();
-        sinon.stub(Ticket, 'create').resolves({ id: 'tid', ...req.body });
-        const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
+  describe("addTicket", function () {
+    it("T044 should create a new ticket (201)", async function () {
+      const req = {
+        user: { id: "userid" },
+        body: {
+          username: "user",
+          subject: "sub",
+          email: "e",
+          message: "m",
+          createdAt: new Date(),
+        },
+      };
+      const sortStub = sinon.stub().resolves({ ticketNo: "T00001" });
+      sinon.stub(TicketNo, "findOne").returns({ sort: sortStub });
+      sinon.stub(TicketNo.prototype, "save").resolves();
+      sinon.stub(Ticket, "create").resolves({ id: "tid", ...req.body });
+      const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
-        await ticketController.addTicket(req, res);
-        assert.isTrue(res.status.calledWith(201));
-        assert.isTrue(res.json.calledOnce);
+      await ticketController.addTicket(req, res);
+      assert.isTrue(res.status.calledWith(201));
+      assert.isTrue(res.json.calledOnce);
     });
 
-    it("should handle error (500)", async function() {
-        const sortStub = sinon.stub().resolves(null);
-        sinon.stub(TicketNo, 'findOne').returns({ sort: sortStub });
-        sinon.stub(TicketNo.prototype, 'save').resolves();
-        sinon.stub(Ticket, 'create').throws(new Error('DB Error'));
-        const req = { user: { id: 'userid' }, body: { username: 'user', subject: 'sub', email: 'e', message: 'm', createdAt: new Date() } };
-        const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
+    it("T045 should handle error (500)", async function () {
+      const sortStub = sinon.stub().resolves(null);
+      sinon.stub(TicketNo, "findOne").returns({ sort: sortStub });
+      sinon.stub(TicketNo.prototype, "save").resolves();
+      sinon.stub(Ticket, "create").throws(new Error("DB Error"));
+      const req = {
+        user: { id: "userid" },
+        body: {
+          username: "user",
+          subject: "sub",
+          email: "e",
+          message: "m",
+          createdAt: new Date(),
+        },
+      };
+      const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
-        await ticketController.addTicket(req, res);
-        assert.isTrue(res.status.calledWith(500));
-        assert.isTrue(res.json.calledOnce);
+      await ticketController.addTicket(req, res);
+      assert.isTrue(res.status.calledWith(500));
+      assert.isTrue(res.json.calledOnce);
     });
-    });
+  });
 
-  describe("updateTicket", function() {
-    it("should update existing ticket", async function() {
-      const req = { params: { id: 'tid' }, body: { username: 'user', subject: 'sub', message: 'm', email: 'e', status: 'open' } };
+  describe("updateTicket", function () {
+    it("T046 should update existing ticket", async function () {
+      const req = {
+        params: { id: "tid" },
+        body: {
+          username: "user",
+          subject: "sub",
+          message: "m",
+          email: "e",
+          status: "open",
+        },
+      };
       const fakeTicket = { save: sinon.stub().resolvesThis(), ...req.body };
-      sinon.stub(Ticket, 'findById').resolves(fakeTicket);
+      sinon.stub(Ticket, "findById").resolves(fakeTicket);
       const res = { json: sinon.spy(), status: sinon.stub().returnsThis() };
 
       await ticketController.updateTicket(req, res);
@@ -86,9 +117,9 @@ describe("ticketController instance methods", function() {
       assert.isTrue(res.json.calledWith(fakeTicket));
     });
 
-    it("should return 404 for missing ticket", async function() {
-      sinon.stub(Ticket, 'findById').resolves(null);
-      const req = { params: { id: 'tid' }, body: {} };
+    it("T047 should return 404 for missing ticket", async function () {
+      sinon.stub(Ticket, "findById").resolves(null);
+      const req = { params: { id: "tid" }, body: {} };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
       await ticketController.updateTicket(req, res);
@@ -96,9 +127,9 @@ describe("ticketController instance methods", function() {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("should handle error (500)", async function() {
-      sinon.stub(Ticket, 'findById').throws(new Error('DB Error'));
-      const req = { params: { id: 'tid' }, body: {} };
+    it("T048 should handle error (500)", async function () {
+      sinon.stub(Ticket, "findById").throws(new Error("DB Error"));
+      const req = { params: { id: "tid" }, body: {} };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
       await ticketController.updateTicket(req, res);
@@ -107,11 +138,11 @@ describe("ticketController instance methods", function() {
     });
   });
 
-  describe("deleteTicket", function() {
-    it("should delete existing ticket", async function() {
-      const req = { params: { id: 'tid' } };
+  describe("deleteTicket", function () {
+    it("T049 should delete existing ticket", async function () {
+      const req = { params: { id: "tid" } };
       const fakeTicket = { remove: sinon.stub().resolves() };
-      sinon.stub(Ticket, 'findById').resolves(fakeTicket);
+      sinon.stub(Ticket, "findById").resolves(fakeTicket);
       const res = { json: sinon.spy(), status: sinon.stub().returnsThis() };
 
       await ticketController.deleteTicket(req, res);
@@ -119,9 +150,9 @@ describe("ticketController instance methods", function() {
       assert.isTrue(res.json.calledWith({ message: "ticket deleted" }));
     });
 
-    it("should return 404 when missing", async function() {
-      sinon.stub(Ticket, 'findById').resolves(null);
-      const req = { params: { id: 'tid' } };
+    it("T050 should return 404 when missing", async function () {
+      sinon.stub(Ticket, "findById").resolves(null);
+      const req = { params: { id: "tid" } };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
       await ticketController.deleteTicket(req, res);
@@ -129,9 +160,9 @@ describe("ticketController instance methods", function() {
       assert.isTrue(res.json.calledOnce);
     });
 
-    it("should handle error (500)", async function() {
-      sinon.stub(Ticket, 'findById').throws(new Error('DB Error'));
-      const req = { params: { id: 'tid' } };
+    it("T051 should handle error (500)", async function () {
+      sinon.stub(Ticket, "findById").throws(new Error("DB Error"));
+      const req = { params: { id: "tid" } };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
       await ticketController.deleteTicket(req, res);

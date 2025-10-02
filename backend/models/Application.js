@@ -10,6 +10,7 @@ const applicationSchema = new mongoose.Schema({
   countryofresidence: { type: String },
   email: { type: String },
   city: { type: String },
+  passportNo: { type: String },
   dateofarrival: { type: Date },
   dateofdeparture: { type: Date },
   status: {

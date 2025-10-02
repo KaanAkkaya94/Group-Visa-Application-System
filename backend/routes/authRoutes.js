@@ -25,7 +25,7 @@ router.put("/profile", authMiddleware.protect, (req, res) =>
   userProfile.updateUserProfile(req, res)
 );
 // for admin
-router.get("/", authMiddleware.protect, getAllUsers);
-router.delete("/:id", authMiddleware.protect, deleteUser);
+router.get("/", authMiddleware.protect, authMiddleware.admin, getAllUsers);
+router.delete("/:id", authMiddleware.protect, authMiddleware.admin, deleteUser);
 
 module.exports = router;

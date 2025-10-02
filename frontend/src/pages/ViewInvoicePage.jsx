@@ -7,7 +7,6 @@ const ViewInvoicePage = () => {
   const { user } = useAuth();
   const location = useLocation();
   const userId = location.state.userId || "";
-  console.log("userId", userId);
   const { applicationId } = useParams();
   const navigate = useNavigate();
   const [invoice, setInvoice] = useState(null);

@@ -9,6 +9,7 @@ import RequestInvoicePage from "./pages/RequestInvoicePage";
 import ViewInvoicePage from "./pages/ViewInvoicePage";
 import { useAuth } from "./context/AuthContext";
 import TicketSystemPage from "./pages/TicketSystemPage";
+import UsersManagement from "./pages/UsersManagement";
 import "./App.css";
 
 const Home = () => {
@@ -86,6 +87,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/users" element={<UsersManagement />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />

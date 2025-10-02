@@ -18,6 +18,11 @@ const Navbar = () => {
       <div>
         {user ? (
           <>
+            {user.admin && (
+              <Link to="/users" className="mr-4">
+                Users
+              </Link>
+            )}
             <Link to="/applications" className="mr-4">
               Applications
             </Link>
@@ -27,6 +32,7 @@ const Navbar = () => {
             <Link to="/tickets" className="mr-4">
               Ticket
             </Link>
+
             <button
               onClick={handleLogout}
               className="bg-red-500 px-4 py-2 rounded hover:bg-red-700"

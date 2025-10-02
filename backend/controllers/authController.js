@@ -203,6 +203,39 @@ class UserProfile {
       res.status(500).json({ message: error.message });
     }
   }
+  async updateUserProfileById(req, res) {
+    try {
+      const user = await this.User.findById(req.params.id);
+      if (!user) return res.status(404).json({ message: "User not found" });
+
+      const { name, email, city, address, phone } = req.body;
+      user.name = name || user.name;
+      user.email = email || user.email;
+      user.city = city || user.city;
+      user.address = address || user.address;
+      user.phone = phone || user.phone;
+
+      const updatedUser = await user.save();
+      this.subject.notifySubscribers("updateProfile", {
+        id: updatedUser.id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        address: updatedUser.address,
+        phone: updatedUser.phone,
+      });
+      res.json({
+        id: updatedUser.id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        city: updatedUser.city,
+        address: updatedUser.address,
+        phone: updatedUser.phone,
+        token: generateToken(updatedUser.id),
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 }
 
 const userProfileSubject = new UserProfileSubject();
@@ -221,7 +254,7 @@ class GetAllUsersCommand {
     if (!users) throw new Error("no users");
     return users;
   }
-  // Controller function uses the command
+
   async getAllUsers(req, res) {
     const command = new GetAllUsersCommand(User);
     try {
@@ -233,11 +266,38 @@ class GetAllUsersCommand {
   }
 }
 
+class DeleteUserComannd {
+  constructor(userModel, userId) {
+    this.User = userModel;
+    this.userId = userId;
+  }
+
+  async execute() {
+    const user = await this.User.findById(this.userId);
+    if (!user) throw new Error("User not found");
+
+    await user.remove();
+    return { message: "User deleted" };
+  }
+
+  async deleteUser(req, res) {
+    const command = new DeleteUserComannd(User, req.params.id);
+    try {
+      const users = await command.execute();
+      return res.json(users);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+    }
+  }
+}
+
 let getAllUsersCommand = new GetAllUsersCommand(User);
+let deleteUserCommand = new DeleteUserComannd(User);
 
 module.exports = {
   registerUser,
   LoginFactory,
   userProfile,
   getAllUsers: getAllUsersCommand.getAllUsers.bind(getAllUsersCommand),
+  deleteUser: deleteUserCommand.deleteUser.bind(deleteUserCommand),
 };

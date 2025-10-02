@@ -1,26 +1,35 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import axiosInstance from "../axiosConfig";
+import { useLocation } from "react-router-dom";
 
 const Profile = () => {
-  const { user } = useAuth(); // Access user token from context
+  const location = useLocation();
+  let { user } = useAuth(); // Access user token from context
+  let { selectedUser } = location.state || {};
+  const hasSelectedUser =
+    selectedUser &&
+    typeof selectedUser === "object" &&
+    Object.keys(selectedUser).length > 0;
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    city: "",
-    address: "",
-    phone: "",
+    name: selectedUser?.name || "",
+    email: selectedUser?.email || "",
+    city: selectedUser?.city || "",
+    address: selectedUser?.address || "",
+    phone: selectedUser?.phone || "",
   });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Fetch profile data from the backend
+    if (user.admin && hasSelectedUser) return;
     const fetchProfile = async () => {
       setLoading(true);
       try {
         const response = await axiosInstance.get("/api/auth/profile", {
           headers: { Authorization: `Bearer ${user.token}` },
         });
+
         setFormData({
           name: response.data.name,
           email: response.data.email,
@@ -36,14 +45,18 @@ const Profile = () => {
       }
     };
 
-    if (user) fetchProfile();
+    fetchProfile();
   }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axiosInstance.put("/api/auth/profile", formData, {
+      const api =
+        user.admin && hasSelectedUser
+          ? `/api/auth/profile/${selectedUser._id}`
+          : "/api/auth/profile";
+      await axiosInstance.put(api, formData, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       alert("Profile updated successfully!");
@@ -83,13 +96,6 @@ const Profile = () => {
           onChange={(e) => setFormData({ ...formData, city: e.target.value })}
           className="w-full mb-4 p-2 border rounded"
         />
-        {/* <input
-          type="text"
-          placeholder="Postal code"
-          value={formData.postalcode}
-          onChange={(e) => setFormData({ ...formData, postalcode: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
-        /> */}
         <input
           type="text"
           placeholder="Address"

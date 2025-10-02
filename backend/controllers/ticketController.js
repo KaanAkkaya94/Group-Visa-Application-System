@@ -31,14 +31,12 @@ class TicketController {
     const { username, subject, email, message, createdAt } = req.body;
 
     const lastTicket = await TicketNo.findOne().sort({ ticketNo: -1 });
-    console.log("lastTicket", lastTicket);
     let nextTicketNo = "T00001";
     if (lastTicket) {
       const lastNumber = parseInt(lastTicket.ticketNo.substring(1), 10);
       const newNumber = lastNumber + 1;
       nextTicketNo = "T" + newNumber.toString().padStart(5, "0");
     }
-    console.log("lastTicket", lastTicket);
     const newTicketNumber = new TicketNo({ ticketNo: nextTicketNo });
     await newTicketNumber.save();
 

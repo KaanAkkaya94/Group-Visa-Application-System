@@ -8,8 +8,8 @@
    MONGO_URI=
    JWT_SECRET=
    PORT=
-4. after install all libraries,
-   npm start
+4. after all libraries have been installed,
+   type 'npm start'
 
 **Users**
 
@@ -184,7 +184,7 @@ E-Visa Management System
 
 - Use GitHub for version control and maintain:
 - main branch (stable production-ready code)
-- Feature branches for each new feature
+- Difference branches for each developer
 - Follow proper commit messages and pull request (PR) for code reviews.
 
 **7. CI/CD Pipeline Setup**

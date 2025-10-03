@@ -24,7 +24,12 @@ router.put("/profile", authMiddleware.protect, (req, res) =>
   userProfile.updateUserProfile(req, res)
 );
 // for admin
-router.get("/", authMiddleware.protect, authMiddleware.admin, getAllUsers);
-router.delete("/:id", authMiddleware.protect, authMiddleware.admin, deleteUser);
+router.get("/user", authMiddleware.protect, authMiddleware.admin, getAllUsers);
+router.delete(
+  "/user/:id",
+  authMiddleware.protect,
+  authMiddleware.admin,
+  deleteUser
+);
 
 module.exports = router;

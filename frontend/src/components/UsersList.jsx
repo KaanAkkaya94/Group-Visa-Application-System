@@ -2,12 +2,12 @@ import { useAuth } from "../context/AuthContext";
 import axiosInstance from "../axiosConfig";
 import { Link } from "react-router-dom";
 
-const UsersList = ({ users, setUsers, setEditingUsers, editingUsers }) => {
+const UsersList = ({ users, setUsers }) => {
   const { user } = useAuth();
 
   const handleDelete = async (userId) => {
     try {
-      await axiosInstance.delete(`/api/auth/${userId}`, {
+      await axiosInstance.delete(`/api/auth/user/${userId}`, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       setUsers(users.filter((user) => user._id !== userId));

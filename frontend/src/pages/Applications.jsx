@@ -36,7 +36,7 @@ const Applications = () => {
 
     const fetchAllUsers = async () => {
       try {
-        const response = await axiosInstance.get("/api/auth", {
+        const response = await axiosInstance.get("/api/auth/user", {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         setAllUsers(response.data);

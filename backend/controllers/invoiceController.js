@@ -158,13 +158,13 @@ const getInvoices = invoiceController.getInvoices.bind(invoiceController);
 const getInvoiceByApplication =
   invoiceController.getInvoiceByApplication.bind(invoiceController);
 const addInvoice = invoiceController.addInvoice.bind(invoiceController);
-const updateinvoice = invoiceController.addInvoice.bind(invoiceController);
+const updateInvoice = invoiceController.updateInvoice.bind(invoiceController);
 const deleteInvoice = invoiceController.deleteInvoice.bind(invoiceController);
 
 module.exports = {
   getInvoices,
   getInvoiceByApplication,
   addInvoice,
-  updateinvoice,
+  updateInvoice,
   deleteInvoice,
 };

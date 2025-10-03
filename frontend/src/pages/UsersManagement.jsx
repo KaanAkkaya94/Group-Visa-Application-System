@@ -6,11 +6,10 @@ import { useAuth } from "../context/AuthContext";
 const UsersManagement = () => {
   const { user } = useAuth();
   const [users, setUsers] = useState([]);
-  const [editingUser, setEditingUser] = useState({});
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
-        const response = await axiosInstance.get("/api/auth", {
+        const response = await axiosInstance.get("/api/auth/user", {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         setUsers(response.data);
@@ -24,12 +23,7 @@ const UsersManagement = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <UsersList
-        users={users}
-        setUsers={setUsers}
-        editingUser={editingUser}
-        setEditingUser={setEditingUser}
-      />
+      <UsersList users={users} setUsers={setUsers} />
     </div>
   );
 };

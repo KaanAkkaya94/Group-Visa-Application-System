@@ -3,7 +3,7 @@ const {
   getInvoices,
   getInvoiceByApplication,
   addInvoice,
-  updateinvoice,
+  updateInvoice,
   deleteInvoice,
 } = require("../controllers/invoiceController");
 const { protect } = require("../middleware/authMiddleware");
@@ -14,6 +14,6 @@ router.route("/").get(protect, getInvoices).post(protect, addInvoice);
 // Get invoice for a specific application
 router.get("/application/:applicationId", protect, getInvoiceByApplication);
 
-router.route("/:id").put(protect, updateinvoice).delete(protect, deleteInvoice);
+router.route("/:id").put(protect, updateInvoice).delete(protect, deleteInvoice);
 
 module.exports = router;

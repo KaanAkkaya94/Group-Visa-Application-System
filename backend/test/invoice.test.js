@@ -6,24 +6,24 @@ const sinon = require("sinon");
 const Invoice = require("../models/Invoice");
 const Application = require("../models/Application");
 const {
-  getinvoices,
+  getInvoices,
   getInvoiceByApplication,
-  addinvoice,
-  updateinvoice,
-  deleteinvoice,
+  addInvoice,
+  updateInvoice,
+  deleteInvoice,
 } = require("../controllers/invoiceController");
 
 describe("invoiceController exports", function () {
   afterEach(() => sinon.restore());
 
-  describe("getinvoices", function () {
+  describe("getInvoices", function () {
     it("T039 should return invoices for admin", async function () {
       const req = { user: { admin: true, id: "adminid" } };
       const fakeInvoices = [{ title: "Invoice1" }];
       sinon.stub(Invoice, "find").resolves(fakeInvoices);
       const res = { json: sinon.spy(), status: sinon.stub().returnsThis() };
 
-      await getinvoices(req, res);
+      await getInvoices(req, res);
       assert.isTrue(res.json.calledWith(fakeInvoices));
     });
 
@@ -33,7 +33,7 @@ describe("invoiceController exports", function () {
       sinon.stub(Invoice, "find").resolves(fakeInvoices);
       const res = { json: sinon.spy(), status: sinon.stub().returnsThis() };
 
-      await getinvoices(req, res);
+      await getInvoices(req, res);
       assert.isTrue(res.json.calledWith(fakeInvoices));
     });
 
@@ -42,7 +42,7 @@ describe("invoiceController exports", function () {
       const req = { user: { admin: false, id: "userid" } };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
-      await getinvoices(req, res);
+      await getInvoices(req, res);
       assert.isTrue(res.status.calledWith(500));
       assert.isTrue(res.json.calledOnce);
     });
@@ -92,7 +92,7 @@ describe("invoiceController exports", function () {
     });
   });
 
-  describe("addinvoice", function () {
+  describe("addInvoice", function () {
     it("T045 should create a new invoice (201)", async function () {
       const req = {
         body: {
@@ -112,7 +112,7 @@ describe("invoiceController exports", function () {
         .resolves({ status: "", save: sinon.stub().resolves() });
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
-      await addinvoice(req, res);
+      await addInvoice(req, res);
       assert.isTrue(res.status.calledWith(201));
       assert.isTrue(res.json.calledWith(fakeInvoice));
     });
@@ -133,7 +133,7 @@ describe("invoiceController exports", function () {
       };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
-      await addinvoice(req, res);
+      await addInvoice(req, res);
       assert.isTrue(res.status.calledWith(404));
       assert.isTrue(res.json.calledOnce);
     });
@@ -153,13 +153,13 @@ describe("invoiceController exports", function () {
       };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
-      await addinvoice(req, res);
+      await addInvoice(req, res);
       assert.isTrue(res.status.calledWith(500));
       assert.isTrue(res.json.calledOnce);
     });
   });
 
-  describe("updateinvoice", function () {
+  describe("updateInvoice", function () {
     it("T048 should update existing invoice", async function () {
       const req = {
         params: { id: "invoiceid" },
@@ -174,7 +174,7 @@ describe("invoiceController exports", function () {
       sinon.stub(Invoice, "findById").resolves(fakeInvoice);
       const res = { json: sinon.spy(), status: sinon.stub().returnsThis() };
 
-      await updateinvoice(req, res);
+      await updateInvoice(req, res);
       assert.isTrue(fakeInvoice.save.calledOnce);
       assert.isTrue(res.json.calledWith(fakeInvoice));
     });
@@ -188,7 +188,7 @@ describe("invoiceController exports", function () {
       };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
-      await updateinvoice(req, res);
+      await updateInvoice(req, res);
       assert.isTrue(res.status.calledWith(404));
       assert.isTrue(res.json.calledOnce);
     });
@@ -206,7 +206,7 @@ describe("invoiceController exports", function () {
       sinon.stub(Invoice, "findById").resolves(fakeInvoice);
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
-      await updateinvoice(req, res);
+      await updateInvoice(req, res);
       assert.isTrue(res.status.calledWith(403));
       assert.isTrue(res.json.calledOnce);
     });
@@ -220,7 +220,7 @@ describe("invoiceController exports", function () {
       };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
-      await updateinvoice(req, res);
+      await updateInvoice(req, res);
       assert.isTrue(res.status.calledWith(500));
       assert.isTrue(res.json.calledOnce);
     });
@@ -237,7 +237,7 @@ describe("invoiceController exports", function () {
       sinon.stub(Invoice, "findById").resolves(fakeInvoice);
       const res = { json: sinon.spy(), status: sinon.stub().returnsThis() };
 
-      await deleteinvoice(req, res);
+      await deleteInvoice(req, res);
       assert.isTrue(fakeInvoice.remove.calledOnce);
       assert.isTrue(res.json.calledWith({ message: "Invoice deleted" }));
     });
@@ -251,7 +251,7 @@ describe("invoiceController exports", function () {
       };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
-      await deleteinvoice(req, res);
+      await deleteInvoice(req, res);
       assert.isTrue(res.status.calledWith(404));
       assert.isTrue(res.json.calledOnce);
     });
@@ -269,7 +269,7 @@ describe("invoiceController exports", function () {
       sinon.stub(Invoice, "findById").resolves(fakeInvoice);
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
-      await deleteinvoice(req, res);
+      await deleteInvoice(req, res);
       assert.isTrue(res.status.calledWith(403));
       assert.isTrue(res.json.calledOnce);
     });
@@ -283,7 +283,7 @@ describe("invoiceController exports", function () {
       };
       const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
 
-      await deleteinvoice(req, res);
+      await deleteInvoice(req, res);
       assert.isTrue(res.status.calledWith(500));
       assert.isTrue(res.json.calledOnce);
     });

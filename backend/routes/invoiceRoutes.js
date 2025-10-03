@@ -12,7 +12,7 @@ const router = express.Router();
 router
   .route("/")
   .get(authMiddleware.protect, getInvoices)
-  .post(protect, addInvoice);
+  .post(authMiddleware.protect, addInvoice);
 
 // Get invoice for a specific application
 router.get(

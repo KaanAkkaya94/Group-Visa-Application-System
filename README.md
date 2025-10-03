@@ -155,7 +155,7 @@ E-Visa Management System
 
 2. **Project Design with System Diagram**
 
-- We created a System Diagram to show the software and hardware components of the E-Visa Management System. This diagram was used to present the overall architecture of the system.
+- A System Diagram was created to represent the software and hardware components of the E-Visa Management System. This diagram was used to present the overall architecture of the system.
 
 **3. Backend Development (Node.js + Express + MongoDB)**
 
@@ -212,3 +212,6 @@ E-Visa Management System
 - Adherence to Git best practices and practical contributions.
 - Successful implementation, deploymentand CI/CD pipeline.
 - Problem-solving skills and the ability to go beyond basic requirements.
+
+**Documentation:**
+- The System Requirements Specification (SRS) document provides a detailed description of the scope, goals, constraints and functional and non-functional requirements of the application.

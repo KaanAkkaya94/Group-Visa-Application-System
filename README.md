@@ -153,15 +153,9 @@ Feel free to create/delete new users, which are added to MongoDB
 
 E-Visa Management System
 
-2. **Project Design with SysML and Project Management with JIRA**
+2. **Project Design with System Diagram**
 
-- Draw a requirements diagram, Block Definition Diagram (BDD), and Parametric Diagram based on your project (Connect all functional features).
-- Create a JIRA project and define:
-  - Epic
-  - User Stories (features required in your app)
-  - Child issues or Subtasks (breaking down development work)
-  - Sprint Implementation (organizing work into milestones)
-- Provide your JIRA board URL in the project README.
+- We created a System Diagram to show the software and hardware components of the E-Visa Management System. This diagram was used to present the overall architecture of the system.
 
 **3. Backend Development (Node.js + Express + MongoDB)**
 

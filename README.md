@@ -215,3 +215,6 @@ E-Visa Management System
 
 **Documentation:**
 - The System Requirements Specification (SRS) document provides a detailed description of the scope, goals, constraints and functional and non-functional requirements of the application.
+
+**UI/UX Design:**
+- The application was designed in Figma for design and visualisation purposes before implementation.

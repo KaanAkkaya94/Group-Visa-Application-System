@@ -51,7 +51,7 @@ const TicketForm = ({
         status: "In Progress",
       });
     }
-  }, [editingTicket]);
+  }, [editingTicket, user.name, user.email, today]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -99,7 +99,7 @@ const TicketForm = ({
       onSubmit={handleSubmit}
       className="bg-white p-6 shadow-md rounded mb-6"
     >
-      <h1 className="text-2xl font-bold mb-4"></h1>
+
       <h3 className="text-2xl font-bold mb-4">
         {!user.admin && !editingTicket
           ? "Create New Ticket"

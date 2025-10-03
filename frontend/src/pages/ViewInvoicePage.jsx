@@ -41,7 +41,7 @@ const ViewInvoicePage = () => {
       }
     };
     fetchInvoice();
-  }, [applicationId]);
+  }, [applicationId, user.token, userId]);
 
   const handleUpdate = async (e) => {
     e.preventDefault();

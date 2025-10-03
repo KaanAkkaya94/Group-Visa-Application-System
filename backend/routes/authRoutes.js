@@ -16,8 +16,11 @@ router.get("/profile", authMiddleware.protect, (req, res) =>
   userProfile.getProfile(req, res)
 );
 
-router.put("/profile/:id", authMiddleware.protect, (req, res) =>
-  userProfile.updateUserProfileById(req, res)
+router.put(
+  "/profile/:id",
+  authMiddleware.protect,
+  authMiddleware.admin,
+  (req, res) => userProfile.updateUserProfileById(req, res)
 );
 
 router.put("/profile", authMiddleware.protect, (req, res) =>

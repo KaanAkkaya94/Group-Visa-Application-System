@@ -1,0 +1,1407 @@
+{
+	"info": {
+		"_postman_id": "783dab64-e5d3-4c52-ac54-2b54d1beb9bb",
+		"name": "E-Visa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48238990",
+		"_collection_link": "https://hohaha8964-6059906.postman.co/workspace/IFN636_E-visa~96324e07-9b07-4e98-bb91-36bdc4b29d0e/collection/48238990-783dab64-e5d3-4c52-ac54-2b54d1beb9bb?action=share&source=collection_link&creator=48238990"
+	},
+	"item": [
+		{
+			"name": "Applications",
+			"item": [
+				{
+					"name": "getApplications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/applications/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"applications",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getApplication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/applications/68db62b447d78211da0edd9e",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"applications",
+								"68db62b447d78211da0edd9e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addApplication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"68d3ee471caf65e660eeb115\",\n        \"title\": \"Business Visa\",\n        \"cost\": \"250\",\n        \"firstname\": \"Developer\",\n        \"lastname\": \"Developer\",\n        \"countryofresidence\": \"Australia\",\n        \"email\": \"dev@gmail.com\",\n        \"city\": \"Perth\",\n        \"passportNo\": \"A123123123\",\n        \"dateofarrival\": \"2025-10-20\",\n        \"dateofdeparture\": \"2026-10-30\",\n        \"status\": \"Pre-payment\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/applications/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"applications",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateApplication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"\",\n        \"title\": \"Working Holiday Visa\",\n        \"cost\": \"200\",\n        \"firstname\": \"Peter\",\n        \"lastname\": \"Chow\",\n        \"countryofresidence\": \"Thailand\",\n        \"email\": \"peter@gmail.com\",\n        \"city\": \"BangKok\",\n        \"passportNo\": \"A1233123\",\n        \"dateofarrival\": \"2025-10-01\",\n        \"dateofdeparture\": \"2026-09-30\",\n        \"status\": \"Pre-payment\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/applications/68d9f46121979c5f00a4da2d",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"applications",
+								"68d9f46121979c5f00a4da2d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteApplication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/applications/68df1f536dc091725448d90e",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"applications",
+								"68df1f536dc091725448d90e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"// Basic test",
+									"pm.test(\"Status code is 201 (Created)\", function () {",
+									"pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"// Save JWT if returned",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved from registration response\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Tom\",\n    \"email\": \"tom@gmail.com\",\n    \"password\": \"tom\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/register",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - getUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@gmail.com\",\n    \"password\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Invoices",
+			"item": [
+				{
+					"name": "getInvoices",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/invoices/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"invoices",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getInvoiceByApplication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/invoices/application/68db62b447d78211da0edd9e",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"invoices",
+								"application",
+								"68db62b447d78211da0edd9e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addInvoice",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"applicationId\": \"68db62b447d78211da0edd9e\",\n  \"userId\": \"68d9f33321979c5f00a4da29\",\n  \"title\": \"Working Holiday Visa\",\n  \"cost\": 200,\n  \"method\": \"paypal\",\n  \"details\": \"9090909090\",\n  \"date\": \"2025-09-30\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/invoices/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"invoices",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateInvoice",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"applicationId\": \"68db62b447d78211da0edd9e\",\n  \"userId\": \"68d9f33321979c5f00a4da29\",\n  \"title\": \"Working Holiday Visa\",\n  \"cost\": 200,\n  \"method\": \"credit_card\",\n  \"details\": \"9090909090\",\n  \"date\": \"2025-09-30\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/invoices/68db667647d78211da0edda9",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"invoices",
+								"68db667647d78211da0edda9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteInvoice",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/invoices/68db667647d78211da0edda9",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"invoices",
+								"68db667647d78211da0edda9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ticket",
+			"item": [
+				{
+					"name": "getTickets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/tickets/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"tickets",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateTicket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ticketNo\": \"\",\n    \"username\":  \"Tom Johnson\",\n    \"subject\": \"Update the ticket\",\n    \"email\": \"tom@gmail.com\", \n    \"message\": \"update the ticket by api\", \n    \"createdAt\": \"2025-10-03\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/tickets/68df23df6dc091725448d932",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"68df23df6dc091725448d932"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteTicket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/tickets/68df23df6dc091725448d932",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"68df23df6dc091725448d932"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addTicket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ticketNo\": \"\",\n    \"username\":  \"Tom Johnson\",\n    \"subject\": \"Create a new ticket\",\n    \"email\": \"tom@gmail.com\", \n    \"message\": \"create a ticket by api\", \n    \"createdAt\": \"2025-10-03\",\n    \"status\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/tickets/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"tickets",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "updateApplication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"userId\": \"68d3ee471caf65e660eeb115\",\n        \"title\": \"Family Visa\",\n        \"cost\": \"120\",\n        \"firstname\": \"Dev\",\n        \"lastname\": \"Test\",\n        \"countryofresidence\": \"Australia\",\n        \"email\": \"dev@gmail.com\",\n        \"city\": \"Melbourne\",\n        \"passportNo\": \"A123123\",\n        \"dateofarrival\": \"2025-10-10\",\n        \"dateofdeparture\": \"2026-10-20\",\n        \"status\": \"Pending\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/applications/68db62b447d78211da0edd9e",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"applications",
+								"68db62b447d78211da0edd9e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateTicket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ticketNo\": \"\",\n    \"username\":  \"dev\",\n    \"subject\": \"Update ticket status by admin\",\n    \"email\": \"dev@gmail.com\", \n    \"message\": \"admin update ticket status by api\", \n    \"createdAt\": \"2025-10-03\",\n    \"status\": \"Completion\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/tickets/68dcb8249f1e4c5bea07a9a0",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"68dcb8249f1e4c5bea07a9a0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": []
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "getAllUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response body",
+									"let response = pm.response.json();",
+									"// Basic test: status code should be 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Body matches string\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function",
+									"() {",
+									"pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"// Page 7 of 9",
+									"// IFN636: Software Life Cycle Management –Week 8",
+									"// Save JWT token to environment variable (adjust key as needed)",
+									"if (response.token) {",
+									"pm.environment.set(\"jwt_token\", response.token);",
+									"console.log(\"JWT Token saved to environment\");",
+									"} else {",
+									"console.warn(\"No token found in response!\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/user",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

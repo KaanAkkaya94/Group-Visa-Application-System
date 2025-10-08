@@ -46,7 +46,7 @@ const Profile = () => {
     };
 
     fetchProfile();
-  }, [user]);
+  }, [user, hasSelectedUser]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

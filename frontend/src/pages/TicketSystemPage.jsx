@@ -7,7 +7,6 @@ import { useAuth } from "../context/AuthContext";
 const TicketSystemPage = () => {
   const { user } = useAuth();
   const [tickets, setTickets] = useState([]);
-  const [ticketNo, setTicketNo] = useState("");
   const [editingTicket, setEditingTicket] = useState(null);
 
   useEffect(() => {

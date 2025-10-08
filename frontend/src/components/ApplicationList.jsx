@@ -61,8 +61,8 @@ const ApplicationList = ({
             </span>
           </p>
           <div className="mt-2">
-            {(application.status == "Pre-payment" ||
-              application.status == "Pending") && (
+            {(application.status === "Pre-payment" ||
+              application.status === "Pending") && (
               <button
                 onClick={() => setEditingApplication(application)}
                 className="mr-2 bg-yellow-500 text-white rounded"
@@ -70,8 +70,8 @@ const ApplicationList = ({
                 Edit
               </button>
             )}
-            {(application.status == "Pre-payment" ||
-              application.status == "Pending") && (
+            {(application.status === "Pre-payment" ||
+              application.status === "Pending") && (
               <button
                 onClick={() => handleDelete(application._id)}
                 className="mr-2 bg-red-500 text-white rounded"
@@ -79,8 +79,8 @@ const ApplicationList = ({
                 Delete
               </button>
             )}
-            {(application.status == "Pre-payment" ||
-              application.status == "Pending") &&
+            {(application.status === "Pre-payment" ||
+              application.status === "Pending") &&
               (invoices.some((inv) => inv.applicationId === application._id) ? (
                 <Link
                   to={`/view-invoice/${application._id}`}
